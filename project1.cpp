@@ -152,7 +152,14 @@ int main(int argc, char* argv[]) {
         else if (inst_type == "syscall") {
             // 
         }
-    }
+        else if (inst_type == "addi") {
+            int result = encode_Itype(8, registers[terms[2]], registers[terms[1]], stoi(terms[3]));
+            write_binary(encode_Itype(8, registers[terms[2]], registers[terms[1]], stoi(terms[3])),inst_outfile);
+        }
+        else if (inst_type == "beq") {
+            int result = encode_Itype(4, registers[terms[1]], registers[terms[2]], stoi(terms[3]));
+            write_binary(encode_Itype(4, registers[terms[1]], registers[terms[2]], stoi(terms[3])),inst_outfile);
+        }  
 }
 
 #endif
