@@ -49,6 +49,36 @@ int main(int argc, char* argv[]) {
         infile.close();
     }
 
+    // auto hasDot = [] (const std::string& s) {
+    //     if (s.find('.') == std::string::npo) {
+    //         std::cout << instruction << std::endl;
+    //     };
+    // }
+
+    // auto hasDot = [](const std::string& s) {
+    //     return s.find('.') != std::string::npos;
+    // };
+
+    std::vector<std::string> main;
+    std::vector<std::string> memory;
+    for (const auto& instruction : instructions) {  
+        size_t dot_ind = instruction.find('.');
+        if (dot_ind == std::string::npos) {
+            main.push_back(instruction);
+        } else {
+            memory.push_back(instruction);
+        }
+    }
+
+    for (const auto& main_line : main) { 
+        std::cout << main_line << std::endl;
+    }
+
+    for (const auto& memory_line : memory) { 
+        std::cout << memory_line << std::endl;
+    }
+        
+
     /** Phase 2
      * Process all static memory, output to static memory file
      * TODO: All of this
