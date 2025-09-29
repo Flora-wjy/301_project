@@ -95,6 +95,49 @@ int main(int argc, char* argv[]) {
             int result = encode_Rtype(0,registers[terms[2]], registers[terms[3]], registers[terms[1]], 0, 32);
             write_binary(encode_Rtype(0,registers[terms[2]], registers[terms[3]], registers[terms[1]], 0, 32),inst_outfile);
         }
+        else if (inst_type == "sub") {
+            int result = encode_Rtype(0,registers[terms[2]], registers[terms[3]], registers[terms[1]], 0, 34);
+            write_binary(encode_Rtype(0,registers[terms[2]], registers[terms[3]], registers[terms[1]], 0, 34),inst_outfile);
+        }
+        else if (inst_type == "mult") {
+            int result = encode_Rtype(0,registers[terms[1]], registers[terms[2]], 0, 0, 24);
+            write_binary(encode_Rtype(0,registers[terms[1]], registers[terms[2]], 0, 0, 24),inst_outfile);
+        }
+        else if (inst_type == "div") {
+            int result = encode_Rtype(0,registers[terms[1]], registers[terms[2]], 0, 0, 26);
+            write_binary(encode_Rtype(0,registers[terms[1]], registers[terms[2]], 0, 0, 26),inst_outfile);
+        }
+        else if (inst_type == "mflo") {
+            int result = encode_Rtype(0, 0, 0, registers[terms[1]], 0, 18);
+            write_binary(encode_Rtype(0, 0, 0, registers[terms[1]], 0, 18),inst_outfile);
+        }
+        else if (inst_type == "mfhi") {
+            int result = encode_Rtype(0, 0, 0, registers[terms[1]], 0, 16);
+            write_binary(encode_Rtype(0, 0, 0, registers[terms[1]], 0, 16),inst_outfile);
+        }
+        else if (inst_type == "sll") {
+            int result = encode_Rtype(0, 0, registers[terms[2]], registers[terms[1]], registers[terms[3]], 0);
+            write_binary(encode_Rtype(0, 0, registers[terms[2]], registers[terms[1]], registers[terms[3]], 0),inst_outfile);
+        }
+        else if (inst_type == "srl") {
+            int result = encode_Rtype(0, 0, registers[terms[2]], registers[terms[1]], registers[terms[3]], 2);
+            write_binary(encode_Rtype(0, 0, registers[terms[2]], registers[terms[1]], registers[terms[3]], 2),inst_outfile);
+        }
+        else if (inst_type == "slt") {
+            int result = encode_Rtype(0, registers[terms[2]], registers[terms[3]], registers[terms[1]], registers[terms[3]], 42);
+            write_binary(encode_Rtype(0, registers[terms[2]], registers[terms[3]], registers[terms[1]], registers[terms[3]], 42),inst_outfile);
+        }
+        else if (inst_type == "jr") {
+            int result = encode_Rtype(0, registers[terms[1]], 0, 0, 0, 8);
+            write_binary(encode_Rtype(0, registers[terms[1]], 0, 0, 0, 8),inst_outfile);
+        }
+        else if (inst_type == "jalr") {
+            int result = encode_Rtype(0, registers[terms[1]], 0, registers[terms[2]], 0, 9);
+            write_binary(encode_Rtype(0, registers[terms[1]], 0, registers[terms[2]], 0, 9),inst_outfile);
+        }
+        else if (inst_type == "syscall") {
+            // 
+        }
     }
 }
 
