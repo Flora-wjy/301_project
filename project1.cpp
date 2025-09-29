@@ -162,6 +162,7 @@ int main(int argc, char* argv[]) {
             int result = encode_Itype(4, registers[terms[1]], registers[terms[2]], stoi(terms[3]));
             write_binary(encode_Itype(4, registers[terms[1]], registers[terms[2]], stoi(terms[3])),inst_outfile);
         }  
+    }
 }
 
 #endif
