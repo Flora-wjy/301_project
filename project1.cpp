@@ -57,14 +57,15 @@ int main(int argc, char* argv[]) {
     int inx_main = 0;
     int inx_memory = 0;
     for (const auto& instruction : instructions) {  
-        if (instruction.find('.') == std::string::npos) {             // I DON'T UNDETSTAND THIS PART!!!!!!!!!
+        if (instruction.find('.') == std::string::npos) {   // main          // I DON'T UNDETSTAND THIS PART!!!!!!!!!
             if (instruction.find(':') != std::string::npos) {
                 main_idx.push_back(inx_main);
             } else {
                 main.push_back(instruction);
             }
             ++inx_main;
-        } else {
+            
+        } else {                                            // memory   
             if (instruction.find(':') != std::string::npos) {
                 memory.push_back(instruction);
                 memory_idx.push_back(inx_memory);
@@ -78,14 +79,15 @@ int main(int argc, char* argv[]) {
     for (const auto& memory_line : memory) { 
         std::cout << memory_line << std::endl;
     }
-    std::cout << "-----" << std::endl;    
-    for (const auto& main_line : main) { 
-        std::cout << main_line << std::endl;
-    }
     std::cout << "-----" << std::endl;
     for (const auto& idx : memory_idx) { 
         std::cout << idx << std::endl;
     }
+    std::cout << "-----" << std::endl;    
+    for (const auto& main_line : main) { 
+        std::cout << main_line << std::endl;
+    }
+
     std::cout << "-----" << std::endl;
     for (const auto& idx : main_idx) { 
         std::cout << idx << std::endl;
