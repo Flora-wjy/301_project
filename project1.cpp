@@ -49,48 +49,66 @@ int main(int argc, char* argv[]) {
         infile.close();
     }
 
-    std::vector<std::string> memory;
-    std::vector<int> memory_idx;
 
+ // FLORA"S CODE STARTS HERE   
+    std::unordered_map<std::string, std::vector<std::string>> memory;
+    // std::vector<int> memory_idx;         REMOVING THIS, unordered map instead
+    std::unordered_map<std::string, int> memory_label;    
     std::vector<std::string> main;
-    std::vector<int> main_idx;    
-    int inx_main = 0;
-    int inx_memory = 0;
+    // std::vector<int> main_idx;           REMOVING THIS, underored map instead
+    std::unordered_map<std::string, int> main_label;    
+    int main_inx = 0;
+    int memory_inx = 0;
     for (const auto& instruction : instructions) {  
         if (instruction.find('.') == std::string::npos) {   // main          // I DON'T UNDETSTAND THIS PART!!!!!!!!!
-            if (instruction.find(':') != std::string::npos) {
-                main_idx.push_back(inx_main);
+            size_t colon_pos = instruction.find(':');
+            if (colon_pos != std::string::npos) {
+                main_label[instruction.substr(0, colon_pos)] = main_inx;
             } else {
                 main.push_back(instruction);
+                ++main_inx;
             }
-            ++inx_main;
-            
-        } else {                                            // memory   
-            if (instruction.find(':') != std::string::npos) {
-                memory.push_back(instruction);
-                memory_idx.push_back(inx_memory);
+        } else {          
+            size_t colon_pos = instruction.find(':');                                  // memory   
+            if (colon_pos != std::string::npos) {
+                std::vector<std::string> terms = split(instruction.substr(colon_pos+1), WHITESPACE);
+                std::string directive = terms[0];
+                std::vector<std::string> contents(terms.begin() + 1, terms.end());
+                // // TEMP: Print out the directive and contents to verify correct parsing
+                // std::cout << directive << ": " << std::endl;
+                // for (const auto& term : contents) {
+                //     std::cout << term << std::endl;
+                // }
+                std::string label = instruction.substr(0, colon_pos);
+                memory[label] = contents;
+                memory_label[label] = memory_inx;
+                memory_inx = memory_inx + 4*contents.size();
             }
-            ++inx_memory;
         }
-        
     }
 
-    // Print out main and memory vectors to verify correct separation
-    for (const auto& memory_line : memory) { 
-        std::cout << memory_line << std::endl;
+
+    // TEMP: Print out main and memory vectors to verify correct separation
+    std::cout << "--- FOR ADELE ---" << std::endl;    
+    std::cout << "**memory: unordered map (label: vector of strings)**" << std::endl; 
+    for (const auto& pair : memory) {
+        std::cout << pair.first << ":" << std::endl;
+        for (const auto& memory_line : pair.second) { 
+            std::cout << memory_line << std::endl;
+        }
     }
-    std::cout << "-----" << std::endl;
-    for (const auto& idx : memory_idx) { 
-        std::cout << idx << std::endl;
+    std::cout << "**memory_label: unordered map (label: index)**" << std::endl;
+    for (const auto& pair : memory_label) {
+        std::cout << pair.first << ": " << pair.second << std::endl;
     }
-    std::cout << "-----" << std::endl;    
+    std::cout << "--- FOR LENA ---" << std::endl;    
+    std::cout << "**vector of strings**" << std::endl; 
     for (const auto& main_line : main) { 
         std::cout << main_line << std::endl;
     }
-
-    std::cout << "-----" << std::endl;
-    for (const auto& idx : main_idx) { 
-        std::cout << idx << std::endl;
+    std::cout << "**unordered map (label: index)**" << std::endl;
+    for (const auto& pair : main_label) {
+        std::cout << pair.first << " : " << pair.second << std::endl;
     }
  
         
