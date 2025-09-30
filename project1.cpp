@@ -144,6 +144,8 @@ int main(int argc, char* argv[]) {
      * Process all instructions, output to instruction memory file
      * TODO: Almost all of this, it only works for adds
      */
+    int pc = 0;     // trakcing pc without editing loop?
+
     for(std::string inst : instructions) {
         std::vector<std::string> terms = split(inst, WHITESPACE+",()");
         std::string inst_type = terms[0];
@@ -173,7 +175,7 @@ int main(int argc, char* argv[]) {
             write_binary(result, inst_outfile);
         }
         else if (inst_type == "sll") {
-            int result = encode_Rtype(0, 0, registers[terms[2]], registers[terms[1]], std::stoi(terms[3]), 0);
+            int result = encode_Rtype(0, 0, registers[terms[2]], registers[terms[1]], std::stoi(terms[3]), 0); // stoi term3 &31?
             write_binary(result, inst_outfile);
         }
         else if (inst_type == "srl") {
@@ -207,19 +209,49 @@ int main(int argc, char* argv[]) {
             write_binary(result, inst_outfile);
         }
         else if (inst_type == "beq") {
-            int offset = instruction_label[terms[3]] - (instruction_label[terms[0]] + 1); // or pc? pc = instruction_label[terms[0]]
+            // when immediate is a number
+            int offset;
+            try {
+                offset = std::stoi(terms[3]);
+            }
+            // when immediate is a label
+            catch (const std::invalid_argument&) {
+                offset = instruction_label[terms[3]] - (pc + 1);
+            }
             int result = encode_Itype(4, registers[terms[1]], registers[terms[2]], offset);
             write_binary(result, inst_outfile);
         }
         else if (inst_type == "bne") {
-            int offset = instruction_label[terms[3]] - (instruction_label[terms[0]] + 1); 
+            int offset;
+            // when immediate is a number
+            try {
+                offset = std::stoi(terms[3]);
+            }
+            // when immediate is a label
+            catch (const std::invalid_argument&) {  
+                offset = instruction_label[terms[3]] - (pc + 1);
+            }
             int result = encode_Itype(5, registers[terms[1]], registers[terms[2]], offset);
             write_binary(result, inst_outfile);
         }
         else if (inst_type == "lw") {
+            int result = encode_Itype(35, registers[terms[3]], registers[terms[1]], std::stoi(terms[2]));
+            write_binary(result, inst_outfile);
+        }
+        else if (inst_type == "sw") {
+            int result = encode_Itype(43, registers[terms[3]], registers[terms[1]], std::stoi(terms[2]));
+            write_binary(result, inst_outfile);
+        }
+        else if (inst_type == "j") {
             //
         }
-
+        else if (inst_type == "jal") {
+            //
+        }
+        else {
+            // exception for unknown instruction
+        }
+        pc++;
     }
 }
 
