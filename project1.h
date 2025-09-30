@@ -62,7 +62,7 @@ void write_binary(int value,std::ofstream &outfile)
 
 bool isNumber(const std::string& s) {
     try {
-        std::stod(s);   // try converting to double
+        std::stoi(s);   // try converting to int
         return true;    // success
     } catch (...) {
         return false;   // conversion failed

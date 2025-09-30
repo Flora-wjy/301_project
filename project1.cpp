@@ -97,19 +97,19 @@ int main(int argc, char* argv[]) {
         infile.close();
     }
 
-    std::vector<double> memory_double;
+    std::vector<double> memory_int;
     for (const auto& memory_line : memory) {
        if (isNumber(memory_line)) {
-            memory_double.push_back(std::stod(memory_line));
+            memory_int.push_back(std::stoi(memory_line));
        } else {
-            memory_double.push_back(instruction_label[memory_line]*4);
+            memory_int.push_back(instruction_label[memory_line]*4);
        }
     }
 
         // TEMP: Print out main and memory vectors to verify correct separation
         std::cout << "--- FOR ADELE ---" << std::endl;    
         std::cout << "**memory: vector of double**" << std::endl; 
-        for (const auto& memory_line : memory_double) { 
+        for (const auto& memory_line : memory_int) { 
             std::cout << memory_line << std::endl;
         }
         std::cout << "**memory_label: unordered map (label: index)**" << std::endl;
