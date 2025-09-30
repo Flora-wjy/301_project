@@ -237,6 +237,13 @@ int main(int argc, char* argv[]) {
             int result = encode_Itype(43, registers[terms[3]], registers[terms[1]], std::stoi(terms[2]));
             write_binary(result, inst_outfile);
         }
+        else if (inst_type == "la") {
+            // convert la to addi
+            // load address: la $t0, label --> addi $t0, $zero, label_address
+            int label_address = memory_label[terms[2]];
+            int result = encode_Itype(8, 0, registers[terms[1]], label_address);
+            write_binary(result, inst_outfile);
+        }
         // J-type: opcode(6) + target address(26)
         else if (inst_type == "j") {
             int target = instruction_label[terms[1]];
