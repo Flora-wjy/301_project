@@ -149,7 +149,7 @@ int main(int argc, char* argv[]) {
     for(std::string inst : instructions) {
         std::vector<std::string> terms = split(inst, WHITESPACE+",()");
         std::string inst_type = terms[0];
-        // R-type
+        // R-type: opcode(6) + rs(5) + rt(5) + rd(5) + shamt(5) + funct(6)
         if (inst_type == "add") {
             int result = encode_Rtype(0,registers[terms[2]], registers[terms[3]], registers[terms[1]], 0, 32);
             write_binary(result, inst_outfile);
@@ -191,10 +191,12 @@ int main(int argc, char* argv[]) {
             write_binary(result, inst_outfile);
         }
         else if (inst_type == "jalr") {
+            // if only one register is given, default to $ra
             if (terms.size() == 2) {
                 int result = encode_Rtype(0, registers[terms[1]], 0, 31, 0, 9);
                 write_binary(result, inst_outfile);
             } else {
+                // if two registers are given
                 int result = encode_Rtype(0, registers[terms[1]], 0, registers[terms[2]], 0, 9);
                 write_binary(result, inst_outfile);
             }
@@ -203,7 +205,7 @@ int main(int argc, char* argv[]) {
             int result = encode_Rtype(0, 0, 0, 26, 0, 12);
             write_binary(result, inst_outfile);
         }
-        // I-type
+        // I-type: opcode(6) + rs(5) + rt(5) + immediate(16)
         else if (inst_type == "addi") {
             int result = encode_Itype(8, registers[terms[2]], registers[terms[1]], std::stoi(terms[3]));
             write_binary(result, inst_outfile);
@@ -242,14 +244,20 @@ int main(int argc, char* argv[]) {
             int result = encode_Itype(43, registers[terms[3]], registers[terms[1]], std::stoi(terms[2]));
             write_binary(result, inst_outfile);
         }
+        // J-type: opcode(6) + target address(26)
         else if (inst_type == "j") {
-            //
+            int target = instruction_label[terms[1]];
+            int result = encode_Jtype(2, target);
+            write_binary(result, inst_outfile);
         }
         else if (inst_type == "jal") {
-            //
+            int target = instruction_label[terms[1]];
+            int result = encode_Jtype(3, target);
+            write_binary(result, inst_outfile);
         }
         else {
-            // exception for unknown instruction
+            // exception handling for unknown instruction
+            std::cerr<< "Unsupported instruction: " << inst_type << std::endl;
         }
         pc++;
     }
