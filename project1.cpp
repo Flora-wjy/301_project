@@ -136,10 +136,9 @@ int main(int argc, char* argv[]) {
      */
     // Take the values from the memory vector and convert to 32-bit binary
     // write to file
-    // for (const auto& token : memory_double) {
-    //     int value = std::stoi(token);
-    //     write_binary(value, static_outfile);
-    // }
+    for (int entry : memory_int) {
+         write_binary(entry, static_outfile);
+     }
 
 
     /** Phase 3
