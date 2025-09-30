@@ -21,6 +21,12 @@ int main(int argc, char* argv[]) {
     inst_outfile.open(argv[argc - 1], std::ios::binary);
     std::vector<std::string> instructions;
 
+    std::vector<std::string> memory;
+    std::unordered_map<std::string, int> memory_label;
+    std::unordered_map<std::string, int> instruction_label;    
+    int instruction_inx = 0;
+    int memory_inx = 0;
+
     /**
      * Phase 1:
      * Read all instructions, clean them of comments and whitespace DONE
@@ -44,72 +50,75 @@ int main(int argc, char* argv[]) {
             if (str == "") { //Ignore empty lines
                 continue;
             }
-            instructions.push_back(str); // TODO This will need to change for labels
+            // instructions.push_back(str); // TODO This will need to change for labels
+            
+
+            // FLORA'S CODE STARTS HERE 
+            if (str.find('.') == std::string::npos) {
+                size_t colon_pos = str.find(':');
+                if (colon_pos != std::string::npos) {
+                    instruction_label[str.substr(0, colon_pos)] = instruction_inx;
+                } else {
+                    instructions.push_back(str);
+                    ++instruction_inx;
+                }
+            } else {          
+                size_t colon_pos = str.find(':');                                  // memory   
+                if (colon_pos != std::string::npos) {
+                    std::vector<std::string> terms = split(str.substr(colon_pos+1), WHITESPACE);
+                    std::string directive = terms[0];
+                    std::vector<std::string> contents(terms.begin() + 1, terms.end());
+                    // // TEMP: Print out the directive and contents to verify correct parsing
+                    // std::cout << directive << ": " << std::endl;
+                    // for (const auto& term : contents) {
+                    //     std::cout << term << std::endl;
+                    // }
+                    std::string label = str.substr(0, colon_pos);
+
+                    memory.insert(memory.end(),terms.begin() + 1, terms.end());
+                    memory_label[label] = memory_inx;
+                    memory_inx = memory_inx + 4*contents.size();
+                }
+            }
+
+
+            // TEMP: Print out main and memory vectors to verify correct separation
+            std::cout << "--- FOR ADELE ---" << std::endl;    
+            std::cout << "**memory: vector of strings**" << std::endl; 
+            for (const auto& memory_line : memory) { 
+                std::cout << memory_line << std::endl;
+            }
+            std::cout << "**memory_label: unordered map (label: index)**" << std::endl;
+            for (const auto& pair : memory_label) {
+                std::cout << pair.first << ": " << pair.second << std::endl;
+            }
+            std::cout << "--- FOR LENA ---" << std::endl;    
+            std::cout << "**instruction: vector of strings**" << std::endl; 
+            for (const auto& instruction_line : instructions) { 
+                std::cout << instruction_line << std::endl;
+            }
+            std::cout << "**instruction_label: unordered map (label: index)**" << std::endl;
+            for (const auto& pair : instruction_label) {
+                std::cout << pair.first << " : " << pair.second << std::endl;
+            }
+
+
+
+
+
+
+
+
+
+
+
         }
         infile.close();
     }
 
 
- // FLORA"S CODE STARTS HERE   
-    std::unordered_map<std::string, std::vector<std::string>> memory;
-    // std::vector<int> memory_idx;         REMOVING THIS, unordered map instead
-    std::unordered_map<std::string, int> memory_label;    
-    std::vector<std::string> main;
-    // std::vector<int> main_idx;           REMOVING THIS, underored map instead
-    std::unordered_map<std::string, int> main_label;    
-    int main_inx = 0;
-    int memory_inx = 0;
-    for (const auto& instruction : instructions) {  
-        if (instruction.find('.') == std::string::npos) {   // main          // I DON'T UNDETSTAND THIS PART!!!!!!!!!
-            size_t colon_pos = instruction.find(':');
-            if (colon_pos != std::string::npos) {
-                main_label[instruction.substr(0, colon_pos)] = main_inx;
-            } else {
-                main.push_back(instruction);
-                ++main_inx;
-            }
-        } else {          
-            size_t colon_pos = instruction.find(':');                                  // memory   
-            if (colon_pos != std::string::npos) {
-                std::vector<std::string> terms = split(instruction.substr(colon_pos+1), WHITESPACE);
-                std::string directive = terms[0];
-                std::vector<std::string> contents(terms.begin() + 1, terms.end());
-                // // TEMP: Print out the directive and contents to verify correct parsing
-                // std::cout << directive << ": " << std::endl;
-                // for (const auto& term : contents) {
-                //     std::cout << term << std::endl;
-                // }
-                std::string label = instruction.substr(0, colon_pos);
-                memory[label] = contents;
-                memory_label[label] = memory_inx;
-                memory_inx = memory_inx + 4*contents.size();
-            }
-        }
-    }
 
-
-    // TEMP: Print out main and memory vectors to verify correct separation
-    std::cout << "--- FOR ADELE ---" << std::endl;    
-    std::cout << "**memory: unordered map (label: vector of strings)**" << std::endl; 
-    for (const auto& pair : memory) {
-        std::cout << pair.first << ":" << std::endl;
-        for (const auto& memory_line : pair.second) { 
-            std::cout << memory_line << std::endl;
-        }
-    }
-    std::cout << "**memory_label: unordered map (label: index)**" << std::endl;
-    for (const auto& pair : memory_label) {
-        std::cout << pair.first << ": " << pair.second << std::endl;
-    }
-    std::cout << "--- FOR LENA ---" << std::endl;    
-    std::cout << "**vector of strings**" << std::endl; 
-    for (const auto& main_line : main) { 
-        std::cout << main_line << std::endl;
-    }
-    std::cout << "**unordered map (label: index)**" << std::endl;
-    for (const auto& pair : main_label) {
-        std::cout << pair.first << " : " << pair.second << std::endl;
-    }
+    
  
         
 
@@ -185,12 +194,12 @@ int main(int argc, char* argv[]) {
             write_binary(result, inst_outfile);
         }
         else if (inst_type == "beq") {
-            int offset = main_label[terms[3]] - (main_label[terms[0]] + 1); // or pc? pc = main_label[terms[0]]
+            int offset = instruction_label[terms[3]] - (instruction_label[terms[0]] + 1); // or pc? pc = instruction_label[terms[0]]
             int result = encode_Itype(4, registers[terms[1]], registers[terms[2]], offset);
             write_binary(result, inst_outfile);
         }
         else if (inst_type == "bne") {
-            int offset = main_label[terms[3]] - (main_label[terms[0]] + 1); 
+            int offset = instruction_label[terms[3]] - (instruction_label[terms[0]] + 1); 
             int result = encode_Itype(5, registers[terms[1]], registers[terms[2]], offset);
             write_binary(result, inst_outfile);
         }
