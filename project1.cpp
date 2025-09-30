@@ -202,6 +202,12 @@ int main(int argc, char* argv[]) {
                 write_binary(result, inst_outfile);
             }
         }
+        else if (inst_type == "mov") {
+            // convert mov to add
+            // move: mov $t0, $t1 --> add $t0, $t1, $zero
+            int result = encode_Rtype(0, registers[terms[2]], 0, registers[terms[1]], 0, 32);
+            write_binary(result, inst_outfile);
+        }
         else if (inst_type == "syscall") {
             int result = encode_Rtype(0, 0, 0, 26, 0, 12);
             write_binary(result, inst_outfile);
@@ -250,6 +256,12 @@ int main(int argc, char* argv[]) {
             // load address: la $t0, label --> addi $t0, $zero, label_address
             int label_address = memory_label[terms[2]];
             int result = encode_Itype(8, 0, registers[terms[1]], label_address);
+            write_binary(result, inst_outfile);
+        }
+        else if (inst_type == "li") {
+            // convert li to addi
+            // load immediate: li $t0, 5 --> addi $t0, $zero, 5
+            int result = encode_Itype(8, 0, registers[terms[1]], std::stoi(terms[2]));
             write_binary(result, inst_outfile);
         }
         // J-type: opcode(6) + target address(26)
