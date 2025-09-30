@@ -67,12 +67,14 @@ int encode_Rtype(int opcode, int rs, int rt, int rd, int shftamt, int funccode) 
 }
 
 // Utility function for encoding an arithmetic "I" type function
-int encode_Itype(int opcode, int rs, int rt, int constant) {
-    return (opcode << 26) + (rs << 21) + (rt << 16) + (constant & 0xFFFF);
+int encode_Itype(int opcode, int rs, int rt, int immediate) {
+    return (opcode << 26) + (rs << 21) + (rt << 16) + (immediate & 0xFFFF);
 }
 
 // Utility function for encoding an arithmetic "J" type function
-
+int encode_Jtype(int opcode, int immediate) {
+    return (opcode << 26) + (immediate & 0x3FFFFFF);
+}
 
 /**
  * Register name map
