@@ -8,6 +8,8 @@
 #include <iostream>
 #include <sstream>
 #include <fstream>
+#include <stdexcept>
+
 
 int main(int argc, char* argv[]) {
     if (argc < 4) // Checks that at least 3 arguments are given in command line
@@ -124,8 +126,21 @@ int main(int argc, char* argv[]) {
 
     /** Phase 2
      * Process all static memory, output to static memory file
-     * TODO: All of this
      */
+    // Take the values from the memory vector and convert to 32-bit binary
+    // result stored in static_binaries vector
+    std::vector<std::string> static_binaries;
+    for (const auto& memory_line : memory) { 
+        std::istringstream iss(memory_line); std::string token; 
+        while (iss >> token) { 
+            int value = std::stoi(token); 
+            std::bitset<32> binary(value); 
+            static_binaries.push_back(binary.to_string()); 
+        } 
+    }
+    write_binaries_to_file_text(static_binaries, argv[argc - 2]);
+
+
 
     /** Phase 3
      * Process all instructions, output to instruction memory file
