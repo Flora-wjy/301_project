@@ -126,17 +126,16 @@ int main(int argc, char* argv[]) {
      * Process all static memory, output to static memory file
      */
     // Take the values from the memory vector and convert to 32-bit binary
-    // result stored in static_binaries vector
-    std::vector<std::string> static_binaries;
-    for (const auto& memory_line : memory) { 
-        std::istringstream iss(memory_line); std::string token; 
-        while (iss >> token) { 
-            int value = std::stoi(token); 
-            std::bitset<32> binary(value); 
-            static_binaries.push_back(binary.to_string()); 
-        } 
+    // write to file
+    std::ofstream outfile(argv[argc - 2], std::ios::binary);
+    for (const auto& memory_line : memory) {
+        std::istringstream iss(memory_line);
+        std::string token;
+        while (iss >> token) {
+            int value = std::stoi(token);
+            write_binary(value, outfile);
+        }
     }
-    write_binaries_to_file_text(static_binaries, argv[argc - 2]);
 
 
 

@@ -76,21 +76,6 @@ int encode_Jtype(int opcode, int immediate) {
     return (opcode << 26) + (immediate & 0x3FFFFFF);
 }
 
-// Write vector of binary strings to a file line by line
-inline void write_binaries_to_file_text(const std::vector<std::string>& binaries,
-                                        const std::string& output_filename) 
-{
-    std::ofstream outfile(output_filename);
-    if (!outfile) {
-        throw std::runtime_error("Could not open output file: " + output_filename);
-    }
-
-    for (const auto& bin : binaries) {
-        outfile << bin << "\n";
-    }
-}
-
-
 /**
  * Register name map
  */
