@@ -127,13 +127,9 @@ int main(int argc, char* argv[]) {
      */
     // Take the values from the memory vector and convert to 32-bit binary
     // write to file
-    for (const auto& memory_line : memory) {
-        std::istringstream iss(memory_line);
-        std::string token;
-        while (iss >> token) {
-            int value = std::stoi(token);
-            write_binary(value, static_outfile);
-        }
+    for (const auto& token : memory) {
+        int value = std::stoi(token);
+        write_binary(value, static_outfile);
     }
 
 
