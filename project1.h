@@ -60,6 +60,15 @@ void write_binary(int value,std::ofstream &outfile)
  * Helper methods for instruction encoding
  */
 
+bool isNumber(const std::string& s) {
+    try {
+        std::stod(s);   // try converting to double
+        return true;    // success
+    } catch (...) {
+        return false;   // conversion failed
+    }
+}
+
 
 // Utility function for encoding an arithmetic "R" type function
 int encode_Rtype(int opcode, int rs, int rt, int rd, int shftamt, int funccode) {
