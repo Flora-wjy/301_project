@@ -10,7 +10,6 @@
 #include <fstream>
 #include <stdexcept>
 
-
 int main(int argc, char* argv[]) {
     if (argc < 4) // Checks that at least 3 arguments are given in command line
     {
@@ -97,10 +96,20 @@ int main(int argc, char* argv[]) {
         }
         infile.close();
     }
+
+    std::vector<double> memory_double;
+    for (const auto& memory_line : memory) {
+       if (isNumber(memory_line)) {
+            memory_double.push_back(std::stod(memory_line));
+       } else {
+            memory_double.push_back(instruction_label[memory_line]*4);
+       }
+    }
+
         // TEMP: Print out main and memory vectors to verify correct separation
         std::cout << "--- FOR ADELE ---" << std::endl;    
-        std::cout << "**memory: vector of strings**" << std::endl; 
-        for (const auto& memory_line : memory) { 
+        std::cout << "**memory: vector of double**" << std::endl; 
+        for (const auto& memory_line : memory_double) { 
             std::cout << memory_line << std::endl;
         }
         std::cout << "**memory_label: unordered map (label: index)**" << std::endl;
@@ -127,10 +136,10 @@ int main(int argc, char* argv[]) {
      */
     // Take the values from the memory vector and convert to 32-bit binary
     // write to file
-    for (const auto& token : memory_double) {
-        int value = std::stoi(token);
-        write_binary(value, static_outfile);
-    }
+    // for (const auto& token : memory_double) {
+    //     int value = std::stoi(token);
+    //     write_binary(value, static_outfile);
+    // }
 
 
     /** Phase 3
