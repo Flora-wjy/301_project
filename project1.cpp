@@ -53,9 +53,32 @@ int main(int argc, char* argv[]) {
             }
             // instructions.push_back(str); // TODO This will need to change for labels
             
+            if (str.find(".") != std::string::npos) {           // Memory
+                std::cout << "memory: " << str << std::endl;
+                size_t colon_pos = str.find(':');
 
-            // FLORA'S CODE STARTS HERE 
-            if (str.find('.') == std::string::npos) {                               // instructions
+                if (colon_pos != std::string::npos) {
+                    std::string label = str.substr(0, colon_pos);
+                    std::vector<std::string> terms = split(str.substr(colon_pos+1), WHITESPACE);
+                    std::string directive = terms[0];
+                    memory_label[label] = memory_inx;
+
+                    if (directive == ".asciiz") {               // .ASCIIZ
+                        size_t first = str.find_first_of('"') + 1;
+                        size_t last = str.find_last_of('"') - 1;
+                        size_t ascii_len = last - first + 1;
+                        for (char c : str.substr(first, ascii_len)) {
+                            memory.push_back(std::to_string((int) c));
+                            memory_inx = memory_inx + 4;
+                        }
+                        memory.push_back("0");
+                        memory_inx = memory_inx + 4;
+                    } else {
+                        memory.insert(memory.end(), terms.begin() + 1, terms.end());
+                        memory_inx += (terms.end() - terms.begin() - 1)*4;
+                    }
+                }
+            } else {                                            // Instruction
                 size_t colon_pos = str.find(':');
                 if (colon_pos != std::string::npos) {
                     instruction_label[str.substr(0, colon_pos)] = instruction_inx;
@@ -63,36 +86,7 @@ int main(int argc, char* argv[]) {
                     instructions.push_back(str);
                     ++instruction_inx;
                 }
-            } else {          
-                size_t colon_pos = str.find(':');                                  // memory   
-                if (colon_pos != std::string::npos) {
-                    std::string label = str.substr(0, colon_pos);
-                    std::vector<std::string> terms = split(str.substr(colon_pos+1), WHITESPACE);
-                    std::string directive = terms[0];
-
-                    // // TRYING TO IMPLEMENT .ASCIIZ
-                    // if (directive == ".asciiz") {
-                    //     size_t first = str.find_first_of('"') + 1;
-                    //     size_t last = str.find_last_of('"') - 1;
-                    //     size_t content_len = last - first + 1;
-                    //     std::string content = str.substr(first, content_len);
-                    // }
-
-                    std::vector<std::string> contents(terms.begin() + 1, terms.end());
-                    
-                    // TEMP: Print out the directive and contents to verify correct parsing
-                    std::cout << directive << ": " << std::endl;
-                    for (const auto& term : contents) {
-                        std::cout << term << std::endl;
-                    }
-
-                    memory.insert(memory.end(),terms.begin() + 1, terms.end());
-                    memory_label[label] = memory_inx;
-                    memory_inx = memory_inx + 4*contents.size();
-                }
             }
-
-
         }
         infile.close();
     }
@@ -106,29 +100,25 @@ int main(int argc, char* argv[]) {
        }
     }
 
-        // TEMP: Print out main and memory vectors to verify correct separation
-        std::cout << "--- FOR ADELE ---" << std::endl;    
-        std::cout << "**memory: vector of double**" << std::endl; 
-        for (const auto& memory_line : memory_int) { 
-            std::cout << memory_line << std::endl;
-        }
-        std::cout << "**memory_label: unordered map (label: index)**" << std::endl;
-        for (const auto& pair : memory_label) {
-            std::cout << pair.first << ": " << pair.second << std::endl;
-        }
-        std::cout << "--- FOR LENA ---" << std::endl;    
-        std::cout << "**instruction: vector of strings**" << std::endl; 
-        for (const auto& instruction_line : instructions) { 
-            std::cout << instruction_line << std::endl;
-        }
-        std::cout << "**instruction_label: unordered map (label: index)**" << std::endl;
-        for (const auto& pair : instruction_label) {
-            std::cout << pair.first << " : " << pair.second << std::endl;
-        }
-
-
-    
- 
+    // TEMP: Print out main and memory vectors to verify correct separation
+    std::cout << "--- FOR ADELE ---" << std::endl;    
+    std::cout << "**memory: vector of double**" << std::endl; 
+    for (const auto& memory_line : memory_int) { 
+        std::cout << memory_line << std::endl;
+    }
+    std::cout << "**memory_label: unordered map (label: index)**" << std::endl;
+    for (const auto& pair : memory_label) {
+        std::cout << pair.first << ": " << pair.second << std::endl;
+    }
+    std::cout << "--- FOR LENA ---" << std::endl;    
+    std::cout << "**instruction: vector of strings**" << std::endl; 
+    for (const auto& instruction_line : instructions) { 
+        std::cout << instruction_line << std::endl;
+    }
+    std::cout << "**instruction_label: unordered map (label: index)**" << std::endl;
+    for (const auto& pair : instruction_label) {
+        std::cout << pair.first << " : " << pair.second << std::endl;
+    }
         
 
     /** Phase 2
@@ -137,9 +127,9 @@ int main(int argc, char* argv[]) {
     // Take the values from the memory vector and convert to 32-bit binary
     // write to file
     for (int entry : memory_int) {
-         write_binary(entry, static_outfile);
-     }
-
+        write_binary(entry, static_outfile);
+    }
+    static_outfile.close();
 
     /** Phase 3
      * Process all instructions, output to instruction memory file
@@ -281,6 +271,7 @@ int main(int argc, char* argv[]) {
         }
         pc++;
     }
+    inst_outfile.close();
 }
 
 #endif
