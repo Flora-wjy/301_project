@@ -54,7 +54,6 @@ int main(int argc, char* argv[]) {
             // instructions.push_back(str); // TODO This will need to change for labels
             
             if (str.find(".") != std::string::npos) {           // Memory
-                std::cout << "memory: " << str << std::endl;
                 size_t colon_pos = str.find(':');
 
                 if (colon_pos != std::string::npos) {
