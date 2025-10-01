@@ -100,25 +100,25 @@ int main(int argc, char* argv[]) {
        }
     }
 
-    // TEMP: Print out main and memory vectors to verify correct separation
-    std::cout << "--- FOR ADELE ---" << std::endl;    
-    std::cout << "**memory: vector of double**" << std::endl; 
-    for (const auto& memory_line : memory_int) { 
-        std::cout << memory_line << std::endl;
-    }
-    std::cout << "**memory_label: unordered map (label: index)**" << std::endl;
-    for (const auto& pair : memory_label) {
-        std::cout << pair.first << ": " << pair.second << std::endl;
-    }
-    std::cout << "--- FOR LENA ---" << std::endl;    
-    std::cout << "**instruction: vector of strings**" << std::endl; 
-    for (const auto& instruction_line : instructions) { 
-        std::cout << instruction_line << std::endl;
-    }
-    std::cout << "**instruction_label: unordered map (label: index)**" << std::endl;
-    for (const auto& pair : instruction_label) {
-        std::cout << pair.first << " : " << pair.second << std::endl;
-    }
+    // // TEMP: Print out main and memory vectors to verify correct separation
+    // std::cout << "--- FOR ADELE ---" << std::endl;    
+    // std::cout << "**memory: vector of double**" << std::endl; 
+    // for (const auto& memory_line : memory_int) { 
+    //     std::cout << memory_line << std::endl;
+    // }
+    // std::cout << "**memory_label: unordered map (label: index)**" << std::endl;
+    // for (const auto& pair : memory_label) {
+    //     std::cout << pair.first << ": " << pair.second << std::endl;
+    // }
+    // std::cout << "--- FOR LENA ---" << std::endl;    
+    // std::cout << "**instruction: vector of strings**" << std::endl; 
+    // for (const auto& instruction_line : instructions) { 
+    //     std::cout << instruction_line << std::endl;
+    // }
+    // std::cout << "**instruction_label: unordered map (label: index)**" << std::endl;
+    // for (const auto& pair : instruction_label) {
+    //     std::cout << pair.first << " : " << pair.second << std::endl;
+    // }
         
 
     /** Phase 2

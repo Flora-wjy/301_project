@@ -15,5 +15,4 @@ int main(int argc, char* argv[]) {
 std::setw(8) << std::hex << buffer << " " << std::dec << buffer << std::endl;
   }
   file.close();
-  
 }
