@@ -105,9 +105,8 @@ int main(int argc, char* argv[]) {
 
     /** Phase 3
      * Process all instructions, output to instruction memory file
-     * TODO: Almost all of this, it only works for adds
      */
-    int pc = 0;     // trakcing pc without editing loop?
+    int pc = 0;
 
     for(std::string inst : instructions) {
         std::vector<std::string> terms = split(inst, WHITESPACE+",()");
@@ -138,7 +137,7 @@ int main(int argc, char* argv[]) {
             write_binary(result, inst_outfile);
         }
         else if (inst_type == "sll") {
-            int result = encode_Rtype(0, 0, registers[terms[2]], registers[terms[1]], std::stoi(terms[3]), 0); // stoi term3 &31?
+            int result = encode_Rtype(0, 0, registers[terms[2]], registers[terms[1]], std::stoi(terms[3]), 0);
             write_binary(result, inst_outfile);
         }
         else if (inst_type == "srl") {
