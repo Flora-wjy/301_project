@@ -269,6 +269,23 @@ int main(int argc, char* argv[]) {
             int result = encode_Jtype(3, target);
             write_binary(result, inst_outfile);
         }
+        // Pseudo-instructions
+        else if (inst_type == "sge") {
+            int slt = encode_Rtype(0, registers[terms[2]], registers[terms[3]], registers[terms[1]], 0, 42);
+            write_binary(slt, inst_outfile);
+            int xori = encode_Itype(14, registers[terms[1]], registers[terms[1]], 1); 
+            write_binary(xori, inst_outfile);
+        }
+        else if (inst_type == "sle") {
+            int slt = encode_Rtype(0, registers[terms[3]], registers[terms[2]], registers[terms[1]], 0, 42);
+            write_binary(slt, inst_outfile);
+            int xori = encode_Itype(14, registers[terms[1]], registers[terms[1]], 1); 
+            write_binary(xori, inst_outfile);
+        }
+        else if (inst_type == "sgt") {
+            int slt = encode_Rtype(0, registers[terms[3]], registers[terms[2]], registers[terms[1]], 0, 42);
+            write_binary(slt, inst_outfile);
+        }
         else {
             // exception handling for unknown instruction
             std::cerr<< "Unsupported instruction: " << inst_type << std::endl;
