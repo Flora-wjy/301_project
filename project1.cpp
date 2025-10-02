@@ -31,10 +31,6 @@ int main(int argc, char* argv[]) {
     /**
      * Phase 1:
      * Read all instructions, clean them of comments and whitespace DONE
-     * TODO: Determine the numbers for all static memory labels
-     * (measured in bytes starting at 0)
-     * TODO: Determine the line numbers of all instruction line labels
-     * (measured in instructions) starting at 0
     */
 
     //For each input file:
@@ -51,12 +47,11 @@ int main(int argc, char* argv[]) {
             if (str == "") { //Ignore empty lines
                 continue;
             }
-            // instructions.push_back(str); // TODO This will need to change for labels
             
             if (str.find(".") != std::string::npos) {           // Memory
                 size_t colon_pos = str.find(':');
 
-                if (colon_pos != std::string::npos) {
+                if (colon_pos != std::string::npos) {           // Find labels
                     std::string label = str.substr(0, colon_pos);
                     std::vector<std::string> terms = split(str.substr(colon_pos+1), WHITESPACE);
                     std::string directive = terms[0];
@@ -66,66 +61,44 @@ int main(int argc, char* argv[]) {
                         size_t first = str.find_first_of('"') + 1;
                         size_t last = str.find_last_of('"') - 1;
                         size_t ascii_len = last - first + 1;
-                        for (char c : str.substr(first, ascii_len)) {
+                        for (char c : str.substr(first, ascii_len)) {       // convert each char to ascii int
                             memory.push_back(std::to_string((int) c));
                             memory_inx = memory_inx + 4;
                         }
-                        memory.push_back("0");
+                        memory.push_back("0");                              // null terminator (asciiz convention)
                         memory_inx = memory_inx + 4;
-                    } else {
+                    } else {                                    // .WORD
                         memory.insert(memory.end(), terms.begin() + 1, terms.end());
                         memory_inx += (terms.end() - terms.begin() - 1)*4;
                     }
                 }
             } else {                                            // Instruction
                 size_t colon_pos = str.find(':');
-                if (colon_pos != std::string::npos) {
+                if (colon_pos != std::string::npos) {           // Find labels
                     instruction_label[str.substr(0, colon_pos)] = instruction_inx;
-                } else {
+                } else {                                        // Add (non-label) instruction to instructions vector
                     instructions.push_back(str);
                     ++instruction_inx;
                 }
             }
         }
         infile.close();
-    }
+    }      
+
+    /** Phase 2
+     * Process all static memory, output to static memory file
+     */
 
     std::vector<double> memory_int;
-    for (const auto& memory_line : memory) {
+    for (const auto& memory_line : memory) {                    // convert each memory entry to int
        if (isNumber(memory_line)) {
             memory_int.push_back(std::stoi(memory_line));
        } else {
             memory_int.push_back(instruction_label[memory_line]*4);
        }
-    }
+    }  
 
-    // // TEMP: Print out main and memory vectors to verify correct separation
-    // std::cout << "--- FOR ADELE ---" << std::endl;    
-    // std::cout << "**memory: vector of double**" << std::endl; 
-    // for (const auto& memory_line : memory_int) { 
-    //     std::cout << memory_line << std::endl;
-    // }
-    // std::cout << "**memory_label: unordered map (label: index)**" << std::endl;
-    // for (const auto& pair : memory_label) {
-    //     std::cout << pair.first << ": " << pair.second << std::endl;
-    // }
-    // std::cout << "--- FOR LENA ---" << std::endl;    
-    // std::cout << "**instruction: vector of strings**" << std::endl; 
-    // for (const auto& instruction_line : instructions) { 
-    //     std::cout << instruction_line << std::endl;
-    // }
-    // std::cout << "**instruction_label: unordered map (label: index)**" << std::endl;
-    // for (const auto& pair : instruction_label) {
-    //     std::cout << pair.first << " : " << pair.second << std::endl;
-    // }
-        
-
-    /** Phase 2
-     * Process all static memory, output to static memory file
-     */
-    // Take the values from the memory vector and convert to 32-bit binary
-    // write to file
-    for (int entry : memory_int) {
+    for (int entry : memory_int) {                              // write each entry to binary file
         write_binary(entry, static_outfile);
     }
     static_outfile.close();
