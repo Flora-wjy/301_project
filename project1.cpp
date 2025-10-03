@@ -78,7 +78,13 @@ int main(int argc, char* argv[]) {
                     instruction_label[str.substr(0, colon_pos)] = instruction_inx;
                 } else {                                        // Add (non-label) instruction to instructions vector
                     instructions.push_back(str);
-                    ++instruction_inx;
+                    instruction_inx++;
+                    
+                    // Pseudo-instructions that expand to 2 instructions
+                    std::string inst_type = split(str, WHITESPACE+",()")[0];
+                    if (inst_type == "sge" || inst_type == "sle") {
+                        instruction_inx++;
+                    }
                 }
             }
         }
@@ -274,12 +280,14 @@ int main(int argc, char* argv[]) {
             write_binary(slt, inst_outfile);
             int xori = encode_Itype(14, registers[terms[1]], registers[terms[1]], 1); 
             write_binary(xori, inst_outfile);
+            pc++;
         }
         else if (inst_type == "sle") {
             int slt = encode_Rtype(0, registers[terms[3]], registers[terms[2]], registers[terms[1]], 0, 42);
             write_binary(slt, inst_outfile);
             int xori = encode_Itype(14, registers[terms[1]], registers[terms[1]], 1); 
             write_binary(xori, inst_outfile);
+            pc++;
         }
         else if (inst_type == "sgt") {
             int slt = encode_Rtype(0, registers[terms[3]], registers[terms[2]], registers[terms[1]], 0, 42);
