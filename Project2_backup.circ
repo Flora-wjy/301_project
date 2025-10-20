@@ -901,10 +901,18 @@ end TCL_Generic;&#13;
       <a name="label" val="ALU_CODE"/>
       <a name="width" val="4"/>
     </comp>
-    <comp lib="3" loc="(510,240)" name="Adder"/>
-    <comp lib="3" loc="(510,330)" name="Subtractor"/>
-    <comp lib="3" loc="(510,420)" name="Multiplier"/>
-    <comp lib="3" loc="(510,520)" name="Divider"/>
+    <comp lib="3" loc="(510,240)" name="Adder">
+      <a name="width" val="32"/>
+    </comp>
+    <comp lib="3" loc="(510,330)" name="Subtractor">
+      <a name="width" val="32"/>
+    </comp>
+    <comp lib="3" loc="(510,420)" name="Multiplier">
+      <a name="width" val="32"/>
+    </comp>
+    <comp lib="3" loc="(510,520)" name="Divider">
+      <a name="width" val="32"/>
+    </comp>
     <comp lib="4" loc="(910,430)" name="Register">
       <a name="appearance" val="logisim_evolution"/>
       <a name="label" val="HI"/>
@@ -913,6 +921,24 @@ end TCL_Generic;&#13;
       <a name="appearance" val="logisim_evolution"/>
       <a name="label" val="LO"/>
     </comp>
+    <wire from="(200,200)" to="(440,200)"/>
+    <wire from="(200,670)" to="(410,670)"/>
+    <wire from="(410,250)" to="(410,340)"/>
+    <wire from="(410,250)" to="(470,250)"/>
+    <wire from="(410,340)" to="(410,430)"/>
+    <wire from="(410,340)" to="(470,340)"/>
+    <wire from="(410,430)" to="(410,530)"/>
+    <wire from="(410,430)" to="(470,430)"/>
+    <wire from="(410,530)" to="(410,670)"/>
+    <wire from="(410,530)" to="(470,530)"/>
+    <wire from="(440,200)" to="(440,230)"/>
+    <wire from="(440,230)" to="(440,320)"/>
+    <wire from="(440,230)" to="(470,230)"/>
+    <wire from="(440,320)" to="(440,410)"/>
+    <wire from="(440,320)" to="(470,320)"/>
+    <wire from="(440,410)" to="(440,510)"/>
+    <wire from="(440,410)" to="(470,410)"/>
+    <wire from="(440,510)" to="(470,510)"/>
   </circuit>
   <circuit name="Control">
     <a name="appearance" val="logisim_evolution"/>
