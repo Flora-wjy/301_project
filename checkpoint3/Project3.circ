@@ -146,8 +146,30 @@ end TCL_Generic;&#13;
       <a name="facing" val="west"/>
       <a name="radix" val="10signed"/>
     </comp>
+    <comp lib="0" loc="(2100,360)" name="Constant">
+      <a name="value" val="0x2"/>
+      <a name="width" val="5"/>
+    </comp>
     <comp lib="2" loc="(1740,1010)" name="Multiplexer">
       <a name="width" val="32"/>
+    </comp>
+    <comp lib="3" loc="(2160,350)" name="Shifter">
+      <a name="shift" val="lr"/>
+      <a name="width" val="32"/>
+    </comp>
+    <comp lib="4" loc="(2270,360)" name="RAM">
+      <a name="addrWidth" val="16"/>
+      <a name="appearance" val="logisim_evolution"/>
+      <a name="dataWidth" val="32"/>
+      <a name="enables" val="line"/>
+    </comp>
+    <comp lib="4" loc="(510,360)" name="ROM">
+      <a name="addrWidth" val="16"/>
+      <a name="appearance" val="logisim_evolution"/>
+      <a name="contents">addr/data: 16 32
+0
+</a>
+      <a name="dataWidth" val="32"/>
     </comp>
     <comp loc="(1380,970)" name="regfile"/>
     <comp loc="(1610,500)" name="Control"/>
@@ -170,8 +192,8 @@ end TCL_Generic;&#13;
     <wire from="(1340,500)" to="(1390,500)"/>
     <wire from="(1340,870)" to="(1340,930)"/>
     <wire from="(1340,870)" to="(1660,870)"/>
-    <wire from="(1360,790)" to="(1360,930)"/>
-    <wire from="(1360,790)" to="(1650,790)"/>
+    <wire from="(1360,810)" to="(1360,930)"/>
+    <wire from="(1360,810)" to="(1650,810)"/>
     <wire from="(1380,1010)" to="(1660,1010)"/>
     <wire from="(1380,970)" to="(1770,970)"/>
     <wire from="(1610,500)" to="(1660,500)"/>
@@ -186,7 +208,7 @@ end TCL_Generic;&#13;
     <wire from="(1630,540)" to="(1700,540)"/>
     <wire from="(1640,1040)" to="(1720,1040)"/>
     <wire from="(1640,600)" to="(1640,1040)"/>
-    <wire from="(1650,520)" to="(1650,790)"/>
+    <wire from="(1650,520)" to="(1650,810)"/>
     <wire from="(1660,1000)" to="(1660,1010)"/>
     <wire from="(1660,1000)" to="(1710,1000)"/>
     <wire from="(1660,500)" to="(1660,870)"/>
@@ -204,8 +226,14 @@ end TCL_Generic;&#13;
     <wire from="(1910,620)" to="(1910,810)"/>
     <wire from="(1910,810)" to="(1910,930)"/>
     <wire from="(1910,810)" to="(1940,810)"/>
+    <wire from="(1920,450)" to="(1980,450)"/>
     <wire from="(1970,990)" to="(1980,990)"/>
+    <wire from="(1980,450)" to="(1980,970)"/>
     <wire from="(1980,990)" to="(1980,1070)"/>
+    <wire from="(1980,990)" to="(2110,990)"/>
+    <wire from="(2100,360)" to="(2120,360)"/>
+    <wire from="(2110,340)" to="(2110,990)"/>
+    <wire from="(2110,340)" to="(2120,340)"/>
   </circuit>
   <circuit name="regfile">
     <a name="appearance" val="custom"/>
@@ -1024,17 +1052,20 @@ end TCL_Generic;&#13;
       <text dominant-baseline="central" font-family="SansSerif" font-size="12" text-anchor="middle" x="120" y="77">code</text>
       <text dominant-baseline="central" font-family="SansSerif" font-size="12" text-anchor="middle" x="76" y="100">op1</text>
       <text dominant-baseline="central" font-family="SansSerif" font-size="12" text-anchor="middle" x="75" y="140">op2</text>
-      <text dominant-baseline="central" font-family="SansSerif" font-size="12" text-anchor="middle" x="156" y="120">out</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="12" text-anchor="middle" x="164" y="119">out</text>
       <text dominant-baseline="top" fill="#ffffff" font-family="SansSerif" font-size="14" font-weight="bold" text-anchor="middle" x="123" y="151">ALU</text>
       <polyline fill="none" points="120,61 120,70" stroke="#000000"/>
       <polyline fill="none" points="50,100 60,100" stroke="#000000"/>
       <polyline fill="none" points="50,140 60,140" stroke="#000000"/>
-      <polyline fill="none" points="180,120 170,120" stroke="#000000"/>
+      <polyline fill="none" points="181,120 190,120" stroke="#000000"/>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="12" text-anchor="middle" x="157" y="101">equal</text>
+      <polyline fill="none" points="179,100 189,100" stroke="#000000"/>
       <circ-anchor facing="east" x="180" y="120"/>
       <circ-port dir="in" pin="1060,370" x="120" y="60"/>
       <circ-port dir="in" pin="200,110" x="50" y="100"/>
       <circ-port dir="in" pin="200,130" x="50" y="140"/>
       <circ-port dir="out" pin="1100,270" x="180" y="120"/>
+      <circ-port dir="out" pin="1140,870" x="190" y="100"/>
     </appear>
     <comp lib="0" loc="(1000,400)" name="Probe">
       <a name="appearance" val="classic"/>
@@ -1059,6 +1090,12 @@ end TCL_Generic;&#13;
       <a name="radix" val="16"/>
       <a name="type" val="output"/>
       <a name="width" val="32"/>
+    </comp>
+    <comp lib="0" loc="(1140,870)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="west"/>
+      <a name="label" val="equal"/>
+      <a name="type" val="output"/>
     </comp>
     <comp lib="0" loc="(1170,510)" name="Probe">
       <a name="appearance" val="classic"/>
@@ -1306,6 +1343,9 @@ end TCL_Generic;&#13;
     <comp lib="3" loc="(1040,480)" name="Comparator">
       <a name="width" val="4"/>
     </comp>
+    <comp lib="3" loc="(300,870)" name="Comparator">
+      <a name="width" val="32"/>
+    </comp>
     <comp lib="3" loc="(510,120)" name="Adder">
       <a name="width" val="32"/>
     </comp>
@@ -1348,11 +1388,11 @@ end TCL_Generic;&#13;
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="div"/>
     </comp>
-    <comp lib="8" loc="(215,835)" name="Text">
+    <comp lib="8" loc="(218,882)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="OP1"/>
     </comp>
-    <comp lib="8" loc="(245,840)" name="Text">
+    <comp lib="8" loc="(241,903)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="OP2"/>
     </comp>
@@ -1389,8 +1429,9 @@ end TCL_Generic;&#13;
     <wire from="(220,580)" to="(470,580)"/>
     <wire from="(220,640)" to="(220,700)"/>
     <wire from="(220,640)" to="(470,640)"/>
-    <wire from="(220,700)" to="(220,820)"/>
+    <wire from="(220,700)" to="(220,860)"/>
     <wire from="(220,700)" to="(470,700)"/>
+    <wire from="(220,860)" to="(260,860)"/>
     <wire from="(240,130)" to="(240,190)"/>
     <wire from="(240,130)" to="(470,130)"/>
     <wire from="(240,190)" to="(240,250)"/>
@@ -1413,8 +1454,11 @@ end TCL_Generic;&#13;
     <wire from="(240,680)" to="(470,680)"/>
     <wire from="(240,740)" to="(240,820)"/>
     <wire from="(240,740)" to="(470,740)"/>
+    <wire from="(240,820)" to="(240,880)"/>
     <wire from="(240,820)" to="(280,820)"/>
+    <wire from="(240,880)" to="(260,880)"/>
     <wire from="(300,800)" to="(440,800)"/>
+    <wire from="(300,870)" to="(1140,870)"/>
     <wire from="(320,220)" to="(320,230)"/>
     <wire from="(320,220)" to="(330,220)"/>
     <wire from="(320,250)" to="(320,260)"/>
@@ -1537,7 +1581,7 @@ end TCL_Generic;&#13;
     <a name="circuitnamedboxfixedsize" val="true"/>
     <a name="simulationFrequency" val="1.0"/>
     <appear>
-      <rect fill="none" height="84" stroke="#000000" width="100" x="170" y="50"/>
+      <rect fill="none" height="161" stroke="#000000" width="119" x="151" y="50"/>
       <circ-anchor facing="east" x="270" y="60"/>
       <circ-port dir="in" pin="150,420" x="160" y="60"/>
       <circ-port dir="out" pin="1180,210" x="260" y="60"/>
@@ -1547,6 +1591,13 @@ end TCL_Generic;&#13;
       <circ-port dir="out" pin="1180,520" x="260" y="100"/>
       <circ-port dir="out" pin="1180,580" x="260" y="110"/>
       <circ-port dir="out" pin="1180,730" x="260" y="120"/>
+      <circ-port dir="out" pin="1200,1200" x="260" y="140"/>
+      <circ-port dir="out" pin="1200,1230" x="260" y="150"/>
+      <circ-port dir="out" pin="1200,1260" x="260" y="160"/>
+      <circ-port dir="out" pin="1200,1290" x="260" y="170"/>
+      <circ-port dir="out" pin="1200,1320" x="260" y="180"/>
+      <circ-port dir="out" pin="1200,1350" x="260" y="190"/>
+      <circ-port dir="out" pin="1200,1380" x="260" y="200"/>
     </appear>
     <comp lib="0" loc="(1160,820)" name="Probe">
       <a name="appearance" val="classic"/>
@@ -1610,7 +1661,7 @@ end TCL_Generic;&#13;
     <comp lib="0" loc="(1180,520)" name="Pin">
       <a name="appearance" val="NewPins"/>
       <a name="facing" val="west"/>
-      <a name="label" val="reg_write_e"/>
+      <a name="label" val="reg_we"/>
       <a name="type" val="output"/>
     </comp>
     <comp lib="0" loc="(1180,580)" name="Pin">
@@ -1630,6 +1681,48 @@ end TCL_Generic;&#13;
       <a name="label" val="ALU_code"/>
       <a name="type" val="output"/>
       <a name="width" val="4"/>
+    </comp>
+    <comp lib="0" loc="(1200,1200)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="west"/>
+      <a name="label" val="mem_we"/>
+      <a name="type" val="output"/>
+    </comp>
+    <comp lib="0" loc="(1200,1230)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="west"/>
+      <a name="label" val="is_lw"/>
+      <a name="type" val="output"/>
+    </comp>
+    <comp lib="0" loc="(1200,1260)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="west"/>
+      <a name="label" val="is_beq"/>
+      <a name="type" val="output"/>
+    </comp>
+    <comp lib="0" loc="(1200,1290)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="west"/>
+      <a name="label" val="is_bne"/>
+      <a name="type" val="output"/>
+    </comp>
+    <comp lib="0" loc="(1200,1320)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="west"/>
+      <a name="label" val="is_jump"/>
+      <a name="type" val="output"/>
+    </comp>
+    <comp lib="0" loc="(1200,1350)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="west"/>
+      <a name="label" val="is_jr"/>
+      <a name="type" val="output"/>
+    </comp>
+    <comp lib="0" loc="(1200,1380)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="west"/>
+      <a name="label" val="is_jal"/>
+      <a name="type" val="output"/>
     </comp>
     <comp lib="0" loc="(150,420)" name="Pin">
       <a name="appearance" val="NewPins"/>
@@ -1897,6 +1990,10 @@ end TCL_Generic;&#13;
     <comp lib="8" loc="(1105,570)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="immediate"/>
+    </comp>
+    <comp lib="8" loc="(1338,1209)" name="Text">
+      <a name="font" val="SansSerif plain 12"/>
+      <a name="text" val="=is_sw"/>
     </comp>
     <comp lib="8" loc="(285,605)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
