@@ -2333,7 +2333,7 @@ end TCL_Generic;&#13;
       <a name="facing" val="north"/>
       <a name="size" val="30"/>
     </comp>
-    <comp lib="1" loc="(630,720)" name="OR Gate">
+    <comp lib="1" loc="(630,710)" name="OR Gate">
       <a name="facing" val="north"/>
       <a name="size" val="30"/>
     </comp>
@@ -2464,11 +2464,11 @@ end TCL_Generic;&#13;
     <comp lib="3" loc="(540,960)" name="Comparator">
       <a name="width" val="6"/>
     </comp>
-    <comp lib="8" loc="(1035,1124)" name="Text">
+    <comp lib="8" loc="(1035,1120)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="i-type"/>
     </comp>
-    <comp lib="8" loc="(1039,920)" name="Text">
+    <comp lib="8" loc="(1035,920)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="r-type"/>
     </comp>
@@ -2476,7 +2476,7 @@ end TCL_Generic;&#13;
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="when jr or j, is_jump and is_jr are 1"/>
     </comp>
-    <comp lib="8" loc="(1318,1236)" name="Text">
+    <comp lib="8" loc="(1315,1235)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="=is_sw"/>
     </comp>
@@ -2636,7 +2636,7 @@ end TCL_Generic;&#13;
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="mult/div"/>
     </comp>
-    <comp lib="8" loc="(605,765)" name="Text">
+    <comp lib="8" loc="(605,751)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="sw"/>
     </comp>
@@ -2652,7 +2652,7 @@ end TCL_Generic;&#13;
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="sw/bne/beq"/>
     </comp>
-    <comp lib="8" loc="(670,765)" name="Text">
+    <comp lib="8" loc="(669,753)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="bne/beq"/>
     </comp>
@@ -2664,9 +2664,9 @@ end TCL_Generic;&#13;
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="lw"/>
     </comp>
-    <comp lib="8" loc="(910,625)" name="Text">
+    <comp lib="8" loc="(919,625)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
-      <a name="text" val="sw/bne/beq"/>
+      <a name="text" val="bne/beq"/>
     </comp>
     <comp lib="8" loc="(930,440)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
@@ -2931,15 +2931,15 @@ end TCL_Generic;&#13;
     <wire from="(610,210)" to="(1170,210)"/>
     <wire from="(610,360)" to="(1170,360)"/>
     <wire from="(620,1230)" to="(1180,1230)"/>
-    <wire from="(620,750)" to="(620,1230)"/>
+    <wire from="(620,740)" to="(620,1230)"/>
     <wire from="(630,1180)" to="(630,1270)"/>
     <wire from="(630,1270)" to="(1180,1270)"/>
-    <wire from="(630,560)" to="(630,630)"/>
-    <wire from="(630,630)" to="(630,720)"/>
-    <wire from="(630,630)" to="(950,630)"/>
+    <wire from="(630,560)" to="(630,710)"/>
     <wire from="(630,90)" to="(630,560)"/>
     <wire from="(630,90)" to="(750,90)"/>
-    <wire from="(640,750)" to="(640,1150)"/>
+    <wire from="(640,740)" to="(640,760)"/>
+    <wire from="(640,760)" to="(640,1150)"/>
+    <wire from="(640,760)" to="(730,760)"/>
     <wire from="(650,1180)" to="(650,1310)"/>
     <wire from="(650,1310)" to="(1180,1310)"/>
     <wire from="(660,1450)" to="(660,1510)"/>
@@ -2954,6 +2954,8 @@ end TCL_Generic;&#13;
     <wire from="(710,1390)" to="(710,1410)"/>
     <wire from="(710,1390)" to="(850,1390)"/>
     <wire from="(710,1410)" to="(940,1410)"/>
+    <wire from="(730,630)" to="(730,760)"/>
+    <wire from="(730,630)" to="(950,630)"/>
     <wire from="(730,930)" to="(730,960)"/>
     <wire from="(730,930)" to="(740,930)"/>
     <wire from="(730,960)" to="(950,960)"/>
