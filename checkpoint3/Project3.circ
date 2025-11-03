@@ -2301,10 +2301,11 @@ end TCL_Generic;&#13;
     <comp lib="1" loc="(1050,650)" name="NOT Gate"/>
     <comp lib="1" loc="(1080,1020)" name="AND Gate">
       <a name="facing" val="south"/>
+      <a name="inputs" val="3"/>
       <a name="size" val="30"/>
     </comp>
     <comp lib="1" loc="(1080,90)" name="NOT Gate"/>
-    <comp lib="1" loc="(1090,760)" name="OR Gate">
+    <comp lib="1" loc="(1090,760)" name="AND Gate">
       <a name="facing" val="south"/>
       <a name="size" val="30"/>
     </comp>
@@ -2653,13 +2654,13 @@ end TCL_Generic;&#13;
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="jal/jalr"/>
     </comp>
+    <comp lib="8" loc="(665,750)" name="Text">
+      <a name="font" val="SansSerif plain 12"/>
+      <a name="text" val="bne/beq"/>
+    </comp>
     <comp lib="8" loc="(665,85)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="sw/bne/beq"/>
-    </comp>
-    <comp lib="8" loc="(668,752)" name="Text">
-      <a name="font" val="SansSerif plain 12"/>
-      <a name="text" val="bne/beq"/>
     </comp>
     <comp lib="8" loc="(695,100)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
