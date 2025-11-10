@@ -158,7 +158,7 @@ end TCL_Generic;&#13;
     <comp lib="5" loc="(630,1390)" name="Button"/>
     <comp lib="5" loc="(640,1160)" name="Joystick"/>
     <comp lib="5" loc="(730,760)" name="Keyboard"/>
-    <comp lib="8" loc="(1011,1536)" name="Text">
+    <comp lib="8" loc="(1010,1535)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="Write_enable"/>
     </comp>
@@ -174,11 +174,11 @@ end TCL_Generic;&#13;
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="Write_enable"/>
     </comp>
-    <comp lib="8" loc="(956,1580)" name="Text">
+    <comp lib="8" loc="(955,1580)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="Data"/>
     </comp>
-    <comp lib="8" loc="(982,1560)" name="Text">
+    <comp lib="8" loc="(980,1560)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="Address"/>
     </comp>
@@ -1744,10 +1744,6 @@ end TCL_Generic;&#13;
       <a name="value" val="0x3ffff30"/>
       <a name="width" val="26"/>
     </comp>
-    <comp lib="0" loc="(320,380)" name="Constant">
-      <a name="value" val="0x3ffff34"/>
-      <a name="width" val="26"/>
-    </comp>
     <comp lib="0" loc="(440,480)" name="Splitter">
       <a name="facing" val="west"/>
       <a name="fanout" val="4"/>
@@ -1810,50 +1806,32 @@ end TCL_Generic;&#13;
     <comp lib="1" loc="(450,300)" name="AND Gate">
       <a name="size" val="30"/>
     </comp>
-    <comp lib="1" loc="(450,360)" name="AND Gate">
-      <a name="size" val="30"/>
-    </comp>
-    <comp lib="1" loc="(560,310)" name="OR Gate">
-      <a name="size" val="30"/>
-    </comp>
     <comp lib="3" loc="(390,310)" name="Comparator">
       <a name="width" val="26"/>
     </comp>
-    <comp lib="3" loc="(390,370)" name="Comparator">
-      <a name="width" val="26"/>
-    </comp>
-    <comp lib="8" loc="(73,100)" name="Text">
+    <comp lib="8" loc="(70,100)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="Input Device"/>
     </comp>
     <wire from="(270,230)" to="(340,230)"/>
-    <wire from="(270,300)" to="(340,300)"/>
+    <wire from="(270,300)" to="(350,300)"/>
     <wire from="(270,470)" to="(420,470)"/>
     <wire from="(270,490)" to="(410,490)"/>
     <wire from="(270,510)" to="(420,510)"/>
     <wire from="(270,530)" to="(400,530)"/>
     <wire from="(320,320)" to="(350,320)"/>
-    <wire from="(320,380)" to="(350,380)"/>
-    <wire from="(340,300)" to="(340,360)"/>
-    <wire from="(340,300)" to="(350,300)"/>
-    <wire from="(340,360)" to="(350,360)"/>
     <wire from="(370,230)" to="(400,230)"/>
     <wire from="(390,310)" to="(420,310)"/>
-    <wire from="(390,370)" to="(420,370)"/>
     <wire from="(400,230)" to="(400,290)"/>
-    <wire from="(400,290)" to="(400,350)"/>
     <wire from="(400,290)" to="(420,290)"/>
-    <wire from="(400,350)" to="(420,350)"/>
     <wire from="(400,520)" to="(400,530)"/>
     <wire from="(400,520)" to="(420,520)"/>
     <wire from="(410,490)" to="(410,500)"/>
     <wire from="(410,500)" to="(420,500)"/>
     <wire from="(420,470)" to="(420,490)"/>
     <wire from="(440,480)" to="(630,480)"/>
-    <wire from="(450,300)" to="(530,300)"/>
-    <wire from="(450,360)" to="(510,360)"/>
-    <wire from="(510,320)" to="(510,360)"/>
-    <wire from="(510,320)" to="(530,320)"/>
+    <wire from="(450,300)" to="(560,300)"/>
+    <wire from="(560,300)" to="(560,310)"/>
     <wire from="(560,310)" to="(670,310)"/>
     <wire from="(610,490)" to="(630,490)"/>
     <wire from="(650,230)" to="(650,470)"/>
@@ -1886,7 +1864,7 @@ end TCL_Generic;&#13;
       <a name="radix" val="16"/>
       <a name="width" val="8"/>
     </comp>
-    <comp lib="0" loc="(400,260)" name="Constant">
+    <comp lib="0" loc="(380,260)" name="Constant">
       <a name="value" val="0x3ffff40"/>
       <a name="width" val="26"/>
     </comp>
@@ -1955,7 +1933,7 @@ end TCL_Generic;&#13;
     <wire from="(320,210)" to="(400,210)"/>
     <wire from="(320,240)" to="(410,240)"/>
     <wire from="(320,320)" to="(680,320)"/>
-    <wire from="(400,260)" to="(410,260)"/>
+    <wire from="(380,260)" to="(410,260)"/>
     <wire from="(430,210)" to="(480,210)"/>
     <wire from="(450,250)" to="(480,250)"/>
     <wire from="(530,230)" to="(730,230)"/>
@@ -2079,7 +2057,7 @@ end TCL_Generic;&#13;
       <a name="appearance" val="logisim_evolution"/>
       <a name="width" val="32"/>
     </comp>
-    <comp lib="8" loc="(85,82)" name="Text">
+    <comp lib="8" loc="(85,80)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="Output Device"/>
     </comp>
