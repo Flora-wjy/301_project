@@ -107,6 +107,11 @@ end TCL_Generic;&#13;
       <a name="appearance" val="classic"/>
       <a name="facing" val="south"/>
     </comp>
+    <comp lib="0" loc="(1220,290)" name="Probe">
+      <a name="appearance" val="classic"/>
+      <a name="facing" val="west"/>
+      <a name="radix" val="10signed"/>
+    </comp>
     <comp lib="0" loc="(1230,340)" name="Clock">
       <a name="appearance" val="classic"/>
     </comp>
@@ -203,6 +208,9 @@ end TCL_Generic;&#13;
     <wire from="(1110,990)" to="(1280,990)"/>
     <wire from="(1120,970)" to="(1120,980)"/>
     <wire from="(1120,980)" to="(1270,980)"/>
+    <wire from="(1210,290)" to="(1210,320)"/>
+    <wire from="(1210,290)" to="(1220,290)"/>
+    <wire from="(1210,320)" to="(1240,320)"/>
     <wire from="(1230,340)" to="(1250,340)"/>
     <wire from="(1240,1030)" to="(1290,1030)"/>
     <wire from="(1240,1050)" to="(1280,1050)"/>
@@ -218,6 +226,7 @@ end TCL_Generic;&#13;
     <wire from="(1240,1350)" to="(1300,1350)"/>
     <wire from="(1240,1370)" to="(1250,1370)"/>
     <wire from="(1240,1390)" to="(1260,1390)"/>
+    <wire from="(1240,320)" to="(1240,370)"/>
     <wire from="(1240,370)" to="(1260,370)"/>
     <wire from="(1240,390)" to="(1240,410)"/>
     <wire from="(1240,410)" to="(1270,410)"/>
@@ -480,6 +489,11 @@ end TCL_Generic;&#13;
       <a name="value" val="0x2"/>
       <a name="width" val="5"/>
     </comp>
+    <comp lib="0" loc="(1930,720)" name="Probe">
+      <a name="appearance" val="classic"/>
+      <a name="facing" val="west"/>
+      <a name="radix" val="10signed"/>
+    </comp>
     <comp lib="0" loc="(2030,600)" name="Bit Extender">
       <a name="in_width" val="32"/>
       <a name="out_width" val="26"/>
@@ -505,6 +519,11 @@ end TCL_Generic;&#13;
       <a name="facing" val="west"/>
       <a name="label" val="BusWriteEnable"/>
       <a name="type" val="output"/>
+    </comp>
+    <comp lib="0" loc="(2060,710)" name="Probe">
+      <a name="appearance" val="classic"/>
+      <a name="facing" val="west"/>
+      <a name="radix" val="10signed"/>
     </comp>
     <comp lib="0" loc="(2100,1020)" name="Pin">
       <a name="appearance" val="NewPins"/>
@@ -602,8 +621,7 @@ end TCL_Generic;&#13;
       <a name="addrWidth" val="16"/>
       <a name="appearance" val="logisim_evolution"/>
       <a name="contents">addr/data: 16 32
-20040005 c00000b 20080000 20090000 20080034 100f809 8000009 200a007b
-200b01c8 2002000a 800000f 841020 3e00008 20020007 3e00008 800000f
+201df000 20080010 ac08ff00
 </a>
       <a name="dataWidth" val="32"/>
     </comp>
@@ -778,13 +796,19 @@ end TCL_Generic;&#13;
     <wire from="(1830,990)" to="(1850,990)"/>
     <wire from="(1840,410)" to="(1840,970)"/>
     <wire from="(1850,590)" to="(1850,990)"/>
-    <wire from="(1850,590)" to="(1940,590)"/>
+    <wire from="(1850,590)" to="(1890,590)"/>
     <wire from="(1850,990)" to="(1850,1060)"/>
     <wire from="(1870,540)" to="(1870,1050)"/>
     <wire from="(1870,540)" to="(2050,540)"/>
+    <wire from="(1890,590)" to="(1890,720)"/>
+    <wire from="(1890,590)" to="(1940,590)"/>
+    <wire from="(1890,720)" to="(1930,720)"/>
     <wire from="(1920,610)" to="(1940,610)"/>
     <wire from="(1980,600)" to="(1990,600)"/>
-    <wire from="(2030,600)" to="(2050,600)"/>
+    <wire from="(2030,600)" to="(2040,600)"/>
+    <wire from="(2040,600)" to="(2040,710)"/>
+    <wire from="(2040,600)" to="(2050,600)"/>
+    <wire from="(2040,710)" to="(2060,710)"/>
     <wire from="(2100,1020)" to="(2130,1020)"/>
     <wire from="(2130,1020)" to="(2130,1070)"/>
     <wire from="(730,630)" to="(750,630)"/>
@@ -1367,6 +1391,10 @@ end TCL_Generic;&#13;
       <a name="radix" val="16"/>
       <a name="width" val="26"/>
     </comp>
+    <comp lib="0" loc="(350,320)" name="Constant">
+      <a name="value" val="0x2"/>
+      <a name="width" val="5"/>
+    </comp>
     <comp lib="0" loc="(360,440)" name="Pin">
       <a name="appearance" val="NewPins"/>
       <a name="label" val="DataFromBus"/>
@@ -1381,10 +1409,10 @@ end TCL_Generic;&#13;
       <a name="value" val="0x3ffff00"/>
       <a name="width" val="26"/>
     </comp>
-    <comp lib="1" loc="(1050,300)" name="Controlled Buffer">
-      <a name="width" val="7"/>
-    </comp>
     <comp lib="1" loc="(700,290)" name="AND Gate"/>
+    <comp lib="3" loc="(410,310)" name="Shifter">
+      <a name="width" val="26"/>
+    </comp>
     <comp lib="3" loc="(550,310)" name="Comparator">
       <a name="mode" val="unsigned"/>
       <a name="width" val="26"/>
@@ -1393,12 +1421,13 @@ end TCL_Generic;&#13;
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="Output Device"/>
     </comp>
-    <wire from="(1040,310)" to="(1040,420)"/>
-    <wire from="(1040,420)" to="(1150,420)"/>
-    <wire from="(1050,300)" to="(1150,300)"/>
     <wire from="(340,210)" to="(620,210)"/>
-    <wire from="(340,300)" to="(510,300)"/>
+    <wire from="(340,300)" to="(370,300)"/>
+    <wire from="(350,320)" to="(370,320)"/>
     <wire from="(360,440)" to="(430,440)"/>
+    <wire from="(410,310)" to="(420,310)"/>
+    <wire from="(420,300)" to="(420,310)"/>
+    <wire from="(420,300)" to="(510,300)"/>
     <wire from="(470,440)" to="(920,440)"/>
     <wire from="(490,320)" to="(510,320)"/>
     <wire from="(550,310)" to="(650,310)"/>
@@ -1406,8 +1435,8 @@ end TCL_Generic;&#13;
     <wire from="(620,270)" to="(650,270)"/>
     <wire from="(700,290)" to="(900,290)"/>
     <wire from="(900,290)" to="(900,420)"/>
-    <wire from="(900,420)" to="(1040,420)"/>
-    <wire from="(920,300)" to="(1030,300)"/>
+    <wire from="(900,420)" to="(1150,420)"/>
+    <wire from="(920,300)" to="(1150,300)"/>
     <wire from="(920,300)" to="(920,440)"/>
   </circuit>
   <circuit name="BuzzerController">
