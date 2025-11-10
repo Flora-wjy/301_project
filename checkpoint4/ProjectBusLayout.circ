@@ -4,22 +4,7 @@
 
   <lib desc="#Wiring" name="0">
     <tool name="Splitter">
-      <a name="bit1" val="0"/>
-      <a name="bit10" val="3"/>
-      <a name="bit11" val="3"/>
-      <a name="bit12" val="4"/>
-      <a name="bit13" val="4"/>
-      <a name="bit14" val="5"/>
-      <a name="bit15" val="5"/>
-      <a name="bit2" val="0"/>
-      <a name="bit3" val="1"/>
-      <a name="bit4" val="1"/>
-      <a name="bit5" val="1"/>
-      <a name="bit6" val="2"/>
-      <a name="bit7" val="2"/>
-      <a name="bit8" val="2"/>
-      <a name="bit9" val="3"/>
-      <a name="fanout" val="6"/>
+      <a name="fanout" val="16"/>
       <a name="incoming" val="16"/>
     </tool>
     <tool name="Pin">
@@ -1072,37 +1057,65 @@ end TCL_Generic;&#13;
     <a name="circuit" val="RGBController"/>
     <a name="circuitnamedboxfixedsize" val="true"/>
     <a name="simulationFrequency" val="512.0"/>
-    <comp lib="0" loc="(270,650)" name="Pin">
-      <a name="appearance" val="NewPins"/>
-      <a name="label" val="AddressFromBus"/>
-      <a name="radix" val="16"/>
-      <a name="width" val="26"/>
-    </comp>
-    <comp lib="0" loc="(270,690)" name="Pin">
+    <comp lib="0" loc="(220,380)" name="Pin">
       <a name="appearance" val="NewPins"/>
       <a name="label" val="DataFromBus"/>
       <a name="radix" val="16"/>
       <a name="width" val="32"/>
     </comp>
-    <comp lib="0" loc="(270,730)" name="Pin">
+    <comp lib="0" loc="(220,440)" name="Pin">
       <a name="appearance" val="NewPins"/>
       <a name="label" val="WriteEnable"/>
     </comp>
-    <comp lib="0" loc="(620,650)" name="Pin">
+    <comp lib="0" loc="(230,510)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="label" val="AddressFromBus"/>
+      <a name="radix" val="16"/>
+      <a name="width" val="26"/>
+    </comp>
+    <comp lib="0" loc="(320,530)" name="Constant">
+      <a name="value" val="0x3ffff20"/>
+      <a name="width" val="26"/>
+    </comp>
+    <comp lib="0" loc="(320,580)" name="Constant">
+      <a name="value" val="0x3ffff24"/>
+      <a name="width" val="26"/>
+    </comp>
+    <comp lib="0" loc="(320,630)" name="Constant">
+      <a name="value" val="0x3ffff28"/>
+      <a name="width" val="26"/>
+    </comp>
+    <comp lib="0" loc="(320,680)" name="Constant">
+      <a name="value" val="0x3ffff2c"/>
+      <a name="width" val="26"/>
+    </comp>
+    <comp lib="0" loc="(770,380)" name="Bit Extender">
+      <a name="in_width" val="32"/>
+      <a name="out_width" val="8"/>
+    </comp>
+    <comp lib="0" loc="(770,540)" name="Bit Extender">
+      <a name="in_width" val="32"/>
+      <a name="out_width" val="8"/>
+    </comp>
+    <comp lib="0" loc="(770,680)" name="Bit Extender">
+      <a name="in_width" val="32"/>
+      <a name="out_width" val="24"/>
+    </comp>
+    <comp lib="0" loc="(980,380)" name="Pin">
       <a name="appearance" val="NewPins"/>
       <a name="facing" val="west"/>
       <a name="label" val="RGBX"/>
       <a name="type" val="output"/>
       <a name="width" val="8"/>
     </comp>
-    <comp lib="0" loc="(620,700)" name="Pin">
+    <comp lib="0" loc="(980,540)" name="Pin">
       <a name="appearance" val="NewPins"/>
       <a name="facing" val="west"/>
       <a name="label" val="RGBY"/>
       <a name="type" val="output"/>
       <a name="width" val="8"/>
     </comp>
-    <comp lib="0" loc="(620,750)" name="Pin">
+    <comp lib="0" loc="(980,680)" name="Pin">
       <a name="appearance" val="NewPins"/>
       <a name="facing" val="west"/>
       <a name="label" val="RGBColor"/>
@@ -1110,12 +1123,95 @@ end TCL_Generic;&#13;
       <a name="type" val="output"/>
       <a name="width" val="24"/>
     </comp>
-    <comp lib="0" loc="(620,820)" name="Pin">
+    <comp lib="0" loc="(980,820)" name="Pin">
       <a name="appearance" val="NewPins"/>
       <a name="facing" val="west"/>
       <a name="label" val="RGBWrite"/>
       <a name="type" val="output"/>
     </comp>
+    <comp lib="1" loc="(520,500)" name="AND Gate"/>
+    <comp lib="1" loc="(520,550)" name="AND Gate"/>
+    <comp lib="1" loc="(520,600)" name="AND Gate"/>
+    <comp lib="1" loc="(520,650)" name="AND Gate"/>
+    <comp lib="3" loc="(390,520)" name="Comparator">
+      <a name="width" val="26"/>
+    </comp>
+    <comp lib="3" loc="(390,570)" name="Comparator">
+      <a name="width" val="26"/>
+    </comp>
+    <comp lib="3" loc="(390,620)" name="Comparator">
+      <a name="width" val="26"/>
+    </comp>
+    <comp lib="3" loc="(390,670)" name="Comparator">
+      <a name="width" val="26"/>
+    </comp>
+    <comp lib="4" loc="(810,350)" name="Register">
+      <a name="appearance" val="logisim_evolution"/>
+      <a name="label" val="x"/>
+    </comp>
+    <comp lib="4" loc="(810,510)" name="Register">
+      <a name="appearance" val="logisim_evolution"/>
+      <a name="label" val="y"/>
+    </comp>
+    <comp lib="4" loc="(810,650)" name="Register">
+      <a name="appearance" val="logisim_evolution"/>
+      <a name="label" val="color"/>
+      <a name="width" val="24"/>
+    </comp>
+    <wire from="(220,380)" to="(670,380)"/>
+    <wire from="(220,440)" to="(420,440)"/>
+    <wire from="(230,510)" to="(250,510)"/>
+    <wire from="(250,510)" to="(250,560)"/>
+    <wire from="(250,510)" to="(350,510)"/>
+    <wire from="(250,560)" to="(250,610)"/>
+    <wire from="(250,560)" to="(350,560)"/>
+    <wire from="(250,610)" to="(250,660)"/>
+    <wire from="(250,610)" to="(350,610)"/>
+    <wire from="(250,660)" to="(350,660)"/>
+    <wire from="(320,530)" to="(350,530)"/>
+    <wire from="(320,580)" to="(350,580)"/>
+    <wire from="(320,630)" to="(350,630)"/>
+    <wire from="(320,680)" to="(350,680)"/>
+    <wire from="(390,520)" to="(470,520)"/>
+    <wire from="(390,570)" to="(470,570)"/>
+    <wire from="(390,620)" to="(470,620)"/>
+    <wire from="(390,630)" to="(390,640)"/>
+    <wire from="(390,670)" to="(470,670)"/>
+    <wire from="(420,440)" to="(420,480)"/>
+    <wire from="(420,480)" to="(420,530)"/>
+    <wire from="(420,480)" to="(470,480)"/>
+    <wire from="(420,530)" to="(420,580)"/>
+    <wire from="(420,530)" to="(470,530)"/>
+    <wire from="(420,580)" to="(420,630)"/>
+    <wire from="(420,580)" to="(470,580)"/>
+    <wire from="(420,630)" to="(470,630)"/>
+    <wire from="(520,500)" to="(790,500)"/>
+    <wire from="(520,550)" to="(630,550)"/>
+    <wire from="(520,600)" to="(620,600)"/>
+    <wire from="(520,650)" to="(530,650)"/>
+    <wire from="(530,650)" to="(530,820)"/>
+    <wire from="(530,820)" to="(980,820)"/>
+    <wire from="(620,600)" to="(620,730)"/>
+    <wire from="(620,730)" to="(800,730)"/>
+    <wire from="(630,550)" to="(630,580)"/>
+    <wire from="(630,580)" to="(790,580)"/>
+    <wire from="(670,380)" to="(670,540)"/>
+    <wire from="(670,380)" to="(730,380)"/>
+    <wire from="(670,540)" to="(670,680)"/>
+    <wire from="(670,540)" to="(730,540)"/>
+    <wire from="(670,680)" to="(730,680)"/>
+    <wire from="(770,380)" to="(810,380)"/>
+    <wire from="(770,540)" to="(810,540)"/>
+    <wire from="(770,680)" to="(810,680)"/>
+    <wire from="(790,400)" to="(790,500)"/>
+    <wire from="(790,400)" to="(810,400)"/>
+    <wire from="(790,560)" to="(790,580)"/>
+    <wire from="(790,560)" to="(810,560)"/>
+    <wire from="(800,700)" to="(800,730)"/>
+    <wire from="(800,700)" to="(810,700)"/>
+    <wire from="(870,380)" to="(980,380)"/>
+    <wire from="(870,540)" to="(980,540)"/>
+    <wire from="(870,680)" to="(980,680)"/>
   </circuit>
   <circuit name="TerminalController">
     <a name="appearance" val="logisim_evolution"/>
