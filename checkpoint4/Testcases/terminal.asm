@@ -8,10 +8,10 @@ main:
     addi $sp, $sp, -4096
     la $s0, functions
 begin:
-    lw $t0, 4($s0)
-    la $a0, info
-    jalr $t0
-    lw $t0, 0($s0)
+    lw $t0, 4($s0)      # t0 = f
+    la $a0, info        # a0 = info
+    jalr $t0            # == jal f
+    lw $t0, 0($s0)      # t0 = end
     jalr $t0
 f:
     lw $t0, 0($a0)
