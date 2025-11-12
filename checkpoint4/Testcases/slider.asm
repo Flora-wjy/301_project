@@ -1,3 +1,5 @@
 addi $sp, $0, -4096         # initialization
 
-lw ___, -192(___)
+loop:
+    lw $0, -192($0)
+    j loop
