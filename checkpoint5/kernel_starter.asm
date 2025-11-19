@@ -33,11 +33,13 @@ _syscall0:
     # Initialization goes here
     addi $sp, $0, -4096
     la $k1, _END_OF_STATIC_MEMORY_
+    
+    la $k0, _heapPointer_
+    sw $k1, 0($k0)          # initialize heap pointer
+
     j _syscallEnd_
 
-
-    ################## I DONT KNOW WHAT TO DO FOR THIS ###################
-
+ 
 #Print Integer
 _syscall1:
     # Print Integer code goes here
