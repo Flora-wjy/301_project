@@ -5,6 +5,9 @@
 .data
 _heapPointer_:
     .word 0
+_message_div0: 
+    .asciiz "Divide by zero error\n"
+
 .text
 
 .text
@@ -23,7 +26,8 @@ _syscallStart_:
     beq $v0, $k1, _syscall11 #jump to syscall 11
     addi $k1, $0, 12
     beq $v0, $k1, _syscall12 #jump to syscall 12
-    # Add branches to any syscalls required for your stars.
+    addi $k1, $0, 100        # divide by zero
+    beq $v0, $k1, _exception_div_zero
 
     #Error state - this should never happen - treat it like an end program
     j _syscall10
@@ -204,6 +208,14 @@ _check_keyboard_we:
 
     jr $k0
 
-#extra challenge syscalls go here?
+_exception_div_zero:
+    la $a0, _message_div0
+    li $v0, 4
+    syscall        # print string
+
+    li $v0, 10
+    syscall        # end program
+
+    j _syscall10
 
 _syscallEnd_:
