@@ -3,7 +3,12 @@
 #program will conflict
 
 .data
+_heapPointer_:
+    .word 0
 .text
+
+.text
+
 _syscallStart_:
     beq $v0, $0, _syscall0 #jump to syscall 0
     addi $k1, $0, 1
@@ -23,7 +28,7 @@ _syscallStart_:
     #Error state - this should never happen - treat it like an end program
     j _syscall10
 
-#Do init stuff
+# Do init stuff
 _syscall0:
     # Initialization goes here
     addi $sp, $0, -4096
@@ -147,7 +152,14 @@ _syscall5:
 #Heap allocation
 _syscall9:
     # Heap allocation code goes here
+    la $k1, _heapPointer_
+    lw $v0, 0($k1)
+    add $v0, $v0, $a0
+    sw $v0, 0($k1)
+    sub $v0, $v0, $a0
+    
     jr $k0
+     
 
 #"End" the program
 _syscall10:
@@ -155,12 +167,39 @@ _syscall10:
 
 #print character
 _syscall11:
-    # print character code goes here
+    addi $sp, $sp, -4
+    sw $t0, 0($sp)
+
+    addi $t0, $0, -256
+    sw $a0, 0($t0)
+
+    lw $t0, 0($sp)
+    addi $sp, $sp, 4
+
     jr $k0
 
 #read character
 _syscall12:
     # read character code goes here
+    addi $sp, $sp, -8
+    sw $t0, 0($sp)
+    sw $t1, 4($sp)
+
+_check_keyboard_we:
+    addi $t0, $0, -240
+    lw $t1, 0($t0)
+    beq $t1, $0, _check_keyboard_we
+
+    addi $t0, $0, -236
+    lw $v0, 0($t0)
+
+    addi $t0, $0, -240
+    sw $0, 0($t0)
+
+    lw $t0, 0($sp)
+    lw $t1, 4($sp)
+    addi $sp, $sp, 8
+
     jr $k0
 
 #extra challenge syscalls go here?
