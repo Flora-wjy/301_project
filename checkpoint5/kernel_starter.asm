@@ -39,7 +39,7 @@ _syscall0:
     la $k1, _END_OF_STATIC_MEMORY_
     
     la $k0, _heapPointer_
-    sw $k1, 0($k0)          # initialize heap pointer
+    sw $k1, 0($k0)          # initialize heap pointer to end of static memory
 
     j _syscallEnd_
 
@@ -53,7 +53,7 @@ _syscall1:
     sw $t2, 8($sp)
     sw $t3, 12($sp)
 
-    addi $k1, $0, $a0
+    add $k1, $0, $a0
     slt $k0, $k1, $0        # k1 < 0, k0 = 1
 
     beq $k0, $0, nonnegative
@@ -159,11 +159,11 @@ _syscall5:
 _syscall9:
     # Heap allocation code goes here
     la $k1, _heapPointer_
-    lw $v0, 0($k1)
-    add $v0, $v0, $a0
-    sw $v0, 0($k1)
-    sub $v0, $v0, $a0
-    
+    lw $v0, 0($k1)  # v0 = current heap pointer size
+    add $v0, $v0, $a0   # v0 = new heap pointer size(v9 + requested size)
+    sw $v0, 0($k1)  # update heap pointer
+    sub $v0, $v0, $a0   # return original heap pointer address
+
     jr $k0
      
 
@@ -177,7 +177,7 @@ _syscall11:
     sw $t0, 0($sp)
 
     addi $t0, $0, -256
-    sw $a0, 0($t0)
+    sw $a0, 0($t0)  # put character to print register $a0
 
     lw $t0, 0($sp)
     addi $sp, $sp, 4
@@ -186,21 +186,20 @@ _syscall11:
 
 #read character
 _syscall12:
-    # read character code goes here
     addi $sp, $sp, -8
     sw $t0, 0($sp)
     sw $t1, 4($sp)
 
 _check_keyboard_we:
     addi $t0, $0, -240
-    lw $t1, 0($t0)
-    beq $t1, $0, _check_keyboard_we
+    lw $t1, 0($t0)  # check keyboard status - 1 if input 
+    beq $t1, $0, _check_keyboard_we   # loop if no input
 
     addi $t0, $0, -236
-    lw $v0, 0($t0)
+    lw $v0, 0($t0)  # read character
 
     addi $t0, $0, -240
-    sw $0, 0($t0)
+    sw $0, 0($t0)   # reset keyboard status
 
     lw $t0, 0($sp)
     lw $t1, 4($sp)
@@ -210,12 +209,12 @@ _check_keyboard_we:
 
 _exception_div_zero:
     la $a0, _message_div0
-    li $v0, 4
-    syscall        # print string
+    li $v0, 4       # print string
+    syscall 
 
     li $v0, 10
     syscall        # end program
 
-    j _syscall10
+    # j _syscall10
 
 _syscallEnd_:
