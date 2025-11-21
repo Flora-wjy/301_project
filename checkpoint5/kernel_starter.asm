@@ -158,6 +158,7 @@ _syscall5:
 #Heap allocation
 _syscall9:
     # Heap allocation code goes here
+    # not heap pointer but address from the os 
     la $k1, _heapPointer_
     lw $v0, 0($k1)  # v0 = current heap pointer size
     add $v0, $v0, $a0   # v0 = new heap pointer size(v9 + requested size)
