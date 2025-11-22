@@ -3,8 +3,6 @@
 #program will conflict
 
 .data
-_heapPointer_:
-    .word 0
 _message_div0: 
     .asciiz "Divide by zero error\n"
 
@@ -37,10 +35,10 @@ _syscall0:
     # Initialization goes here
     addi $sp, $0, -4096
     la $k1, _END_OF_STATIC_MEMORY_
-    
-    la $k0, _heapPointer_
-    sw $k1, 0($k0)          # initialize heap pointer to end of static memory
 
+    li $k0, -65536
+
+    sw $k1, 0($k0)
     j _syscallEnd_
 
  
@@ -104,7 +102,7 @@ _syscall5:
     sw $t3, 12($sp)    
     
     
-    
+
     addi $t1, $0, 10
     addi $t2, $0, 1
     addi $k0, $0, -1
@@ -157,17 +155,14 @@ _syscall5:
 
 #Heap allocation
 _syscall9:
-    # Heap allocation code goes here
-    # not heap pointer but address from the os 
-    la $k1, _heapPointer_
-    lw $v0, 0($k1)  # v0 = current heap pointer size
-    add $v0, $v0, $a0   # v0 = new heap pointer size(v9 + requested size)
-    sw $v0, 0($k1)  # update heap pointer
-    sub $v0, $v0, $a0   # return original heap pointer address
+    li $k1,   
+    lw $v0, 0($k1)
+
+    add $a0, $v0, $a0
+    sw $a0, 0($k1)
 
     jr $k0
      
-
 #"End" the program
 _syscall10:
     j _syscall10
