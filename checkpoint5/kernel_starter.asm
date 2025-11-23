@@ -3,8 +3,8 @@
 #program will conflict
 
 .data
-_message_div0: 
-    .asciiz "Divide by zero error\n"
+_message_div_zero: 
+    .asciiz "divide by zero error\n"
 
 .text
 
@@ -14,6 +14,8 @@ _syscallStart_:
     beq $v0, $0, _syscall0 #jump to syscall 0
     addi $k1, $0, 1
     beq $v0, $k1, _syscall1 #jump to syscall 1
+    addi $k1, $0, 4 
+    beq  $v0, $k1, _syscall4
     addi $k1, $0, 5
     beq $v0, $k1, _syscall5 #jump to syscall 5
     addi $k1, $0, 9
@@ -36,7 +38,7 @@ _syscall0:
     addi $sp, $0, -4096
     la $k1, _END_OF_STATIC_MEMORY_
 
-    # li $k0, 
+    li $k0, -4000
 
     sw $k1, 0($k0)
     j _syscallEnd_
@@ -155,7 +157,7 @@ _syscall5:
 
 #Heap allocation
 _syscall9:
-    # li $k1,   
+    li $k1, -4000   
     lw $v0, 0($k1)
 
     add $a0, $v0, $a0
@@ -203,14 +205,55 @@ _check_keyboard_we:
 
     jr $k0
 
+_syscall4:
+    addi $sp, $sp, -4
+    sw $ra, 0($sp)
+    
+    jal _print_string 
+    
+    lw $ra, 0($sp)
+    addi $sp, $sp, 4
+    jr $k0
+
+_print_string:
+    addi $sp, $sp, -12
+    sw $t0, 0($sp)
+    sw $t1, 4($sp)
+    sw $t2, 8($sp)
+
+    add $t0, $a0, $0        # t0 = string pointer
+
+_print_string_loop:
+    lw $t2, 0($t0) 
+    andi $t1, $t2, 255     # only loweset 8bite - one ascii =8
+    beq $t1, $0, _print_string_done  # If null, done
+    sw $t1, -256($0)          # Print character
+    addi $t0, $t0, 1        # Move to next byte
+    j _print_string_loop
+
+_print_string_done:
+    lw $t2, 8($sp)
+    lw $t1, 4($sp)
+    lw $t0, 0($sp)
+    addi $sp, $sp, 12
+    jr $ra
+
+
+
 _exception_div_zero:
-    la $a0, _message_div0
-    li $v0, 4       # print string
-    syscall 
-
-    li $v0, 10
-    syscall        # end program
-
-    # j _syscall10
+    addi $sp, $sp, -12
+    sw $t0, 0($sp)
+    sw $t1, 4($sp)
+    sw $t2, 8($sp)
+    
+    la $a0, _message_div_zero
+    jal _print_string
+    
+    lw $t2, 8($sp)
+    lw $t1, 4($sp)
+    lw $t0, 0($sp)
+    addi $sp, $sp, 12
+    
+    j _syscall10
 
 _syscallEnd_:
