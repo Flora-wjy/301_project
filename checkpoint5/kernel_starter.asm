@@ -162,7 +162,6 @@ _syscall5:
         addi $sp, $sp, 20
     jr $k0
 
-<<<<<<< Updated upstream
 #Heap allocation
 _syscall9:
     li $k1, -4000   
@@ -179,18 +178,9 @@ _syscall10:
 
 #print character
 _syscall11:
-    addi $sp, $sp, -4
-    sw $t0, 0($sp)
-
-    addi $t0, $0, -256
-    sw $a0, 0($t0)  # put character to print register $a0
-
-    lw $t0, 0($sp)
-    addi $sp, $sp, 4
+    sw $a0, -256($0)  # put character to print register $a0
 
     jr $k0
-=======
->>>>>>> Stashed changes
 
 #read character
 _syscall12:
