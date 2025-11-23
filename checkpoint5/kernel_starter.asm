@@ -191,18 +191,6 @@ _syscall12:
     sw $t0, 0($sp)
     sw $t1, 4($sp)
 
-# SYSCALL 13: Audio Control
-# $a0 = buzzer 0 frequency
-# $a1 = buzzer 1 frequency
-# $a2 = buzzer 2 frequency
-# $a3 = global enable (1 = on, 0 = off)
-_syscall13:
-    sw $a0, -128($0)      # freq0
-    sw $a1, -120($0)      # freq1
-    sw $a2, -112($0)      # freq2
-    sw $a3, -104($0)      # enable toggle
-    jr $k0
-
 _check_keyboard_we:
     addi $t0, $0, -240
     lw $t1, 0($t0)  # check keyboard status - 1 if input 
@@ -218,6 +206,18 @@ _check_keyboard_we:
     lw $t1, 4($sp)
     addi $sp, $sp, 8
 
+    jr $k0
+
+# SYSCALL 13: Audio Control
+# $a0 = buzzer 0 frequency
+# $a1 = buzzer 1 frequency
+# $a2 = buzzer 2 frequency
+# $a3 = global enable (1 = on, 0 = off)
+_syscall13:
+    sw $a0, -128($0)      # freq0
+    sw $a1, -120($0)      # freq1
+    sw $a2, -112($0)      # freq2
+    sw $a3, -104($0)      # enable toggle
     jr $k0
 
 _syscall4:
