@@ -49,7 +49,7 @@ _syscall0:
 #Print Integer
 _syscall1:
     # Print Integer code goes here
-    addi $sp, $sp, -16
+    addi $sp, $sp, -20
     sw $t0, 0($sp)
     sw $t1, 4($sp)
     sw $t2, 8($sp)
@@ -59,12 +59,12 @@ _syscall1:
     add $k1, $0, $a0
     slt $k0, $k1, $0        # k1 < 0, k0 = 1
 
-    beq $k0, $0, nonnegative
+    beq $k0, $0, _nonnegative
     addi $k0, $0, 45
     sw $k0, -256($0)        # print '-'
     sub $k1, $0, $k1
 
-    nonnegative:
+    _nonnegative:
         addi $t0, $0, 10        # t0 = 10
         addi $k0, $0, 10000
         mult $k0, $k0
@@ -73,29 +73,29 @@ _syscall1:
         mflo $k0                # k0 = 1,000,000,000
         add $t2, $0, $0         # isLeadingZero?
 
-    printint:                 # loop to check each digits + print
+    _printint:                 # loop to check each digits + print
         div $k1, $k0
         mflo $t1            # t1 = k1 // k0     (the digit)
         mfhi $k1            # k1 = k1 % k0      (next k1)
         or $t3, $t1, $t2
-        beq $t3, $0, leadingzero
+        beq $t3, $0, _leadingzero
         addi $t1, $t1, 48   # digit + 48 --> ascii
         sw $t1, -256($0)
         addi $t2, $0, 1     # isLeadingZero = 1
 
-    leadingzero:
+    _leadingzero:
         div $k0, $t0
         mflo $k0            # k0 = k0 // t0
-        beq $k0, $0, endprintint
-        j printint
+        beq $k0, $0, _endprintint
+        j _printint
 
-    endprintint:
+    _endprintint:
         lw $t0, 0($sp)
         lw $t1, 4($sp)
         lw $t2, 8($sp)
         lw $t3, 12($sp)
         lw $k0, 16($sp)
-        addi $sp, $sp, 16
+        addi $sp, $sp, 20
     jr $k0
 
 #Read Integer
@@ -112,13 +112,13 @@ _syscall5:
     addi $t2, $0, 1
     addi $k0, $0, 0
 
-    readint:
+    _readint:
         lw $t0, -240($0)        # check keyboard status
-        beq $t0, $0, readint    # t0 = 0, loop
+        beq $t0, $0, _readint    # t0 = 0, loop
 
         lw $k1, -236($0)        # read key value
 
-        beq $k1, $t1, endreadint
+        beq $k1, $t1, _endreadint
         addi $t0, $k1, -45
         beq $t0, $0, _t0zero
         addi $t0, $0, -1
@@ -133,13 +133,13 @@ _syscall5:
 
         
         sw $0, -240($0)        # next character
-        j readint
+        j _readint
 
-    endreadint:
+    _endreadint:
         addi $t3, $0, 1
         add $v0, $0, $0
 
-    loopint:
+    _loopint:
         lw $k1, 0($sp)
         mult $t3, $k1
         mflo $k1
@@ -149,14 +149,14 @@ _syscall5:
         addi $k0, $k0, -1       # k0 -= 1
         mult $t3, $t1
         mflo $t3                # t3 = t3 * 10
-        beq $k0, $0, endloopint
-        j loopint
+        beq $k0, $0, _endloopint
+        j _loopint
 
-    endloopint:
-        bne $t2, $0, nonnegativee 
+    _endloopint:
+        bne $t2, $0, _nonnegativee 
         sub $v0, $0, $v0
 
-    nonnegativee:
+    _nonnegativee:
         lw $t0, 0($sp)
         lw $t1, 4($sp)
         lw $t2, 8($sp)
@@ -202,7 +202,7 @@ _check_keyboard_we:
     lw $t0, 0($sp)
     lw $t1, 4($sp)
     addi $sp, $sp, 8
-    
+
     jr $k0
 
 # SYSCALL 13: Audio Control
@@ -218,12 +218,14 @@ _syscall13:
     jr $k0
 
 _syscall4:
-    addi $sp, $sp, -4
+    addi $sp, $sp, -8
     sw $ra, 0($sp)
+    sw $k0, 4($sp)
     
     jal _print_string 
     
     lw $ra, 0($sp)
+    lw $k0, 4($sp)
     addi $sp, $sp, 4
     jr $k0
 
@@ -234,6 +236,7 @@ _print_string:
     sw $t2, 8($sp)
 
     add $t0, $a0, $0        # t0 = string pointer
+    add 
 
 _print_string_loop:
     lw $t2, 0($t0) 
