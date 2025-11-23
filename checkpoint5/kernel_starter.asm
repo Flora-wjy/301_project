@@ -117,6 +117,7 @@ _syscall5:
         beq $t0, $0, _readint    # t0 = 0, loop
 
         lw $k1, -236($0)        # read key value
+        sw $0, -240($0)        # next character
 
         beq $k1, $t1, _endreadint
         addi $t0, $k1, -45
@@ -131,8 +132,6 @@ _syscall5:
         _t0zero:
         and $t2, $t2, $t0        # t2 = 0 when negative
 
-        
-        sw $0, -240($0)        # next character
         j _readint
 
     _endreadint:
@@ -236,12 +235,12 @@ _print_string:
     sw $t2, 8($sp)
 
     add $t0, $a0, $0        # t0 = string pointer
-    add 
+    addi $k0, $0, 10
 
 _print_string_loop:
     lw $t2, 0($t0) 
     andi $t1, $t2, 255     # only loweset 8bite - one ascii =8
-    beq $t1, $0, _print_string_done  # If null, done
+    beq $t1, $k0, _print_string_done  # If null, done
     sw $t1, -256($0)          # Print character
     addi $t0, $t0, 1        # Move to next byte
     j _print_string_loop
