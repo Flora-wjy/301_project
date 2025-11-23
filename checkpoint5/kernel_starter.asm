@@ -52,6 +52,7 @@ _syscall1:
     sw $t1, 4($sp)
     sw $t2, 8($sp)
     sw $t3, 12($sp)
+    sw $k0, 16($sp)
 
     add $k1, $0, $a0
     slt $k0, $k1, $0        # k1 < 0, k0 = 1
@@ -91,31 +92,35 @@ _syscall1:
         lw $t1, 4($sp)
         lw $t2, 8($sp)
         lw $t3, 12($sp)
+        lw $k0, 16($sp)
         addi $sp, $sp, 16
     jr $k0
 
 #Read Integer
 _syscall5:
     # Read Integer code goes here
-    addi $sp, $sp, -16
+    addi $sp, $sp, -20
     sw $t0, 0($sp)
     sw $t1, 4($sp)
     sw $t2, 8($sp)
-    sw $t3, 12($sp)    
-    
-    
+    sw $t3, 12($sp)
+    sw $k0, 16($sp)    
 
     addi $t1, $0, 10
     addi $t2, $0, 1
-    addi $k0, $0, -1
+    addi $k0, $0, 0
 
     readint:
         lw $t0, -240($0)        # check keyboard status
         beq $t0, $0, readint    # t0 = 0, loop
 
         lw $k1, -236($0)        # read key value
+
         beq $k1, $t1, endreadint
         addi $t0, $k1, -45
+        beq $t0, $0, _t0zero
+        addi $t0, $0, -1
+        _t0zero:
         and $t2, $t2, $t0        # t2 = 0 when negative
 
 
@@ -124,7 +129,7 @@ _syscall5:
         sw $k1, 0($sp)
         addi $k0, $k0, 1        # increment k0 (tracking intsize)
         
-        sw $t0, -240($0)        # next character
+        sw $0, -240($0)        # next character
         j readint
 
     endreadint:
@@ -147,14 +152,17 @@ _syscall5:
     endloopint:
         bne $t2, $0, nonnegativee 
         sub $v0, $0, $v0
+
     nonnegativee:
         lw $t0, 0($sp)
         lw $t1, 4($sp)
         lw $t2, 8($sp)
         lw $t3, 12($sp)
-        addi $sp, $sp, 16
+        lw $k0, 16($sp)    
+        addi $sp, $sp, 20
     jr $k0
 
+<<<<<<< Updated upstream
 #Heap allocation
 _syscall9:
     li $k1, -4000   
@@ -181,6 +189,8 @@ _syscall11:
     addi $sp, $sp, 4
 
     jr $k0
+=======
+>>>>>>> Stashed changes
 
 #read character
 _syscall12:
