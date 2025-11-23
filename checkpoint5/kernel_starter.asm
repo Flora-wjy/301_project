@@ -36,7 +36,7 @@ _syscall0:
     addi $sp, $0, -4096
     la $k1, _END_OF_STATIC_MEMORY_
 
-    li $k0, -65536
+    # li $k0, 
 
     sw $k1, 0($k0)
     j _syscallEnd_
@@ -155,7 +155,7 @@ _syscall5:
 
 #Heap allocation
 _syscall9:
-    li $k1,   
+    # li $k1,   
     lw $v0, 0($k1)
 
     add $a0, $v0, $a0
