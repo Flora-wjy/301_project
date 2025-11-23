@@ -122,14 +122,15 @@ _syscall5:
         addi $t0, $k1, -45
         beq $t0, $0, _t0zero
         addi $t0, $0, -1
-        _t0zero:
-        and $t2, $t2, $t0        # t2 = 0 when negative
-
 
         addi $k1, $k1, -48
         addi $sp, $sp, -4
         sw $k1, 0($sp)
         addi $k0, $k0, 1        # increment k0 (tracking intsize)
+
+        _t0zero:
+        and $t2, $t2, $t0        # t2 = 0 when negative
+
         
         sw $0, -240($0)        # next character
         j readint
