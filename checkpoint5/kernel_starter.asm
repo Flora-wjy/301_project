@@ -192,20 +192,17 @@ _syscall12:
     sw $t1, 4($sp)
 
 _check_keyboard_we:
-    addi $t0, $0, -240
-    lw $t1, 0($t0)  # check keyboard status - 1 if input 
+    lw $t1, -240($0)  # check keyboard status - 1 if input 
     beq $t1, $0, _check_keyboard_we   # loop if no input
 
-    addi $t0, $0, -236
-    lw $v0, 0($t0)  # read character
+    lw $v0, -236($0)  # read character
 
-    addi $t0, $0, -240
-    sw $0, 0($t0)   # reset keyboard status
+    sw $0, -240($0)   # reset keyboard status
 
     lw $t0, 0($sp)
     lw $t1, 4($sp)
     addi $sp, $sp, 8
-
+    
     jr $k0
 
 # SYSCALL 13: Audio Control
