@@ -26,6 +26,8 @@ _syscallStart_:
     beq $v0, $k1, _syscall11 #jump to syscall 11
     addi $k1, $0, 12
     beq $v0, $k1, _syscall12 #jump to syscall 12
+    addi $k1, $0, 13
+    beq $v0, $k1, _syscall13 #jump to syscall 13 (audio)
     addi $k1, $0, 100        # divide by zero
     beq $v0, $k1, _exception_div_zero
 
@@ -187,6 +189,18 @@ _syscall12:
     addi $sp, $sp, -8
     sw $t0, 0($sp)
     sw $t1, 4($sp)
+
+# SYSCALL 13: Audio Control
+# $a0 = buzzer 0 frequency
+# $a1 = buzzer 1 frequency
+# $a2 = buzzer 2 frequency
+# $a3 = global enable (1 = on, 0 = off)
+_syscall13:
+    sw $a0, -128($0)      # freq0
+    sw $a1, -120($0)      # freq1
+    sw $a2, -112($0)      # freq2
+    sw $a3, -104($0)      # enable toggle
+    jr $k0
 
 _check_keyboard_we:
     addi $t0, $0, -240
