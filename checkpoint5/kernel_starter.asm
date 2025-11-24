@@ -216,6 +216,7 @@ _syscall13:
     sw $a3, -104($0)      # enable toggle
     jr $k0
 
+# print string
 _syscall4:
     addi $sp, $sp, -8
     sw $ra, 0($sp)
@@ -235,14 +236,13 @@ _print_string:
     sw $t2, 8($sp)
 
     add $t0, $a0, $0        # t0 = string pointer
-    addi $k0, $0, 10
 
 _print_string_loop:
     lw $t2, 0($t0) 
     andi $t1, $t2, 255     # only loweset 8bite - one ascii =8
-    beq $t1, $k0, _print_string_done  # If null, done
+    beq $t1, $0, _print_string_done  # If null, done
     sw $t1, -256($0)          # Print character
-    addi $t0, $t0, 1        # Move to next byte
+    addi $t0, $t0, 4        # Move to next byte
     j _print_string_loop
 
 _print_string_done:

@@ -89,18 +89,11 @@ int main(int argc, char* argv[]) {
             }
         }
         infile.close();
-
-        // _END_OF_STATIC_MEMORY_
-        memory_label["_END_OF_STATIC_MEMORY_"] = memory_inx;
-        memory.push_back(std::to_string(memory_inx));
-
+    }  
         
-                    
-
-
-
-
-    }      
+    // _END_OF_STATIC_MEMORY_
+    memory_label["_END_OF_STATIC_MEMORY_"] = memory_inx;
+    memory.push_back(std::to_string(memory_inx));
 
     /** Phase 2
      * Process all static memory, output to static memory file
