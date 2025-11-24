@@ -57,6 +57,7 @@ _syscall1:
     sw $k0, 16($sp)
 
     add $k1, $0, $a0
+    beq $k1, $0, _printzero
     slt $k0, $k1, $0        # k1 < 0, k0 = 1
 
     beq $k0, $0, _nonnegative
@@ -88,7 +89,13 @@ _syscall1:
         mflo $k0            # k0 = k0 // t0
         beq $k0, $0, _endprintint
         j _printint
+    
+    j _endprintint
 
+    _printzero:
+        addi $t1, $0, 48
+        sw $t1, -256($0)
+    
     _endprintint:
         lw $t0, 0($sp)
         lw $t1, 4($sp)
