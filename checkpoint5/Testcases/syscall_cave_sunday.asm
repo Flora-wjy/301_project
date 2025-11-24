@@ -1,9 +1,6 @@
 # ============================================
 # Cave Story (but using syscalls this time)
 # ============================================
-# call syscall 0 to initialize kernel
-addi $v0, $0, 0
-syscall
 
 # initialization
 addi $t0, $0, 80
